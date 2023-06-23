@@ -1,0 +1,26 @@
+long long nextGreaterElement(long long n) {
+        vector <long long> v;
+        vector <long long> comb;
+        long long num = n;
+        while(n){
+            comb.push_back(n%10);
+            n = n/10;
+        }
+        reverse(comb.begin(),comb.end());
+        do{
+            n = 0;
+            for(int i = 0;i<comb.size();i++) {
+                n = n*10 + comb[i];
+            } 
+            v.push_back(n);
+        }while(next_permutation(comb.begin(),comb.end()));
+        sort(v.begin(),v.end());
+        if(num == v[v.size()-1]) return -1;
+        else{
+            for(int i = 0;i<v.size();i++){
+                if(v[i] == num) n = i+1;
+            }
+        }
+        if(v[n] <= pow(2,31)-1 && v[n]>=-1*pow(2,31)) return v[n];
+        else return -1;
+    }
