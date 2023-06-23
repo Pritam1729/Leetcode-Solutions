@@ -1,0 +1,21 @@
+ListNode* sortList(ListNode* head) {
+        vector <int> v;
+        while(head!=NULL){
+            v.push_back(head->val);
+            head = head->next;
+        }
+        sort(v.begin(),v.end());
+        head = NULL;
+        ListNode *temp;
+        for(int h = 0;h<v.size() ;h++){
+            if(head == NULL){
+                head = new ListNode(v[0]);
+                temp = head;
+            }
+            else {
+                temp->next = new ListNode(v[h]);
+                temp = temp->next;
+            }
+        }
+        return head;
+    }
