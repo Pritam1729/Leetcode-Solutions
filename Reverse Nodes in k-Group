@@ -1,0 +1,29 @@
+ListNode* reverseKGroup(ListNode* head, int k) {
+        vector <int> v;
+        ListNode *temp = head;
+        while(temp!=NULL) {
+            v.push_back(temp->val);
+            temp = temp->next;
+        }
+        int start = 0;
+        int len = v.size();
+        vector <int> b;
+        while((start + k) <=len) {
+            for(int i = start + k -1;i>=start;i--){
+                b.push_back(v[i]);
+            }
+            start = start + k;
+        }
+        if(start<=len) {
+            for(int i = start;i<len;i++){
+                b.push_back(v[i]);
+            }
+        }
+        // for(int i = 0;i<len;i++) cout<<b[i]<<" ";
+        temp = head;
+        for(int i = 0;i<b.size();i++) {
+            temp->val = b[i];
+            temp = temp->next;
+        }
+        return head;
+    }
