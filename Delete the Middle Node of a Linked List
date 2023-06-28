@@ -1,0 +1,21 @@
+ListNode* deleteMiddle(ListNode* head) {
+        ListNode *temp = head;
+        int n = 0;
+        while(temp!=NULL){
+            n++;
+            temp = temp->next;
+        }
+        if(n==1) return NULL;
+        n = (n/2)+1;
+        int i = 1;
+        temp = head;
+        while(i<(n)-1){
+            temp = temp->next;
+            i++;
+        }
+        ListNode *prev = temp->next;
+        temp->next = prev->next;
+        prev->next = NULL;
+        delete prev;
+        return head;
+}
