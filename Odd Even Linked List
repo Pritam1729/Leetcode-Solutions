@@ -1,0 +1,18 @@
+ListNode* oddEvenList(ListNode* head) {
+       vector <int> v;
+       ListNode *temp = head;
+       while(temp!=NULL){
+           v.push_back(temp->val);
+           temp =  temp->next;
+       } 
+       vector <int> b;
+       for(int i = 0;i<v.size();i = i + 2) b.push_back(v[i]);
+       for(int i = 1;i<v.size();i = i + 2) b.push_back(v[i]);
+       for(int i = 0;i<b.size();i++) cout<<b[i]<<" ";
+       temp = head;
+       for(int i = 0;i<v.size();i++){
+           temp->val = b[i];
+           temp = temp->next;
+       }
+       return head;
+    }
