@@ -1,0 +1,41 @@
+void reorderList(ListNode* head) {
+        vector <int> v;
+        ListNode *temp = head;
+        while(temp!=NULL){
+            v.push_back(temp->val);
+            temp= temp->next;
+        }
+        int n = v.size();
+        int i = 0,j = n-1;
+        vector <int> b;
+        if(n%2) n = (n/2)+1;
+        else n = n/2;
+        // cout<<n<<endl;
+        while(i < n && j>0) {
+            b.push_back(v[i]);
+            if(n%2 == 1){
+                if(i < n-1 ) {
+                    b.push_back(v[j]);
+                    j--;
+                }
+            }
+            else {
+                b.push_back(v[j]);
+                j--;
+            }
+            cout<<i<<" "<<j<<endl;
+            i++;
+            
+        }
+        temp = head;
+        for(int i = 0;i<b.size();i++) {
+            cout<<b[i]<<" ";
+            if(temp!=NULL) {
+                temp->val = b[i];
+                temp = temp->next;
+            }
+        }
+
+
+        
+    }
