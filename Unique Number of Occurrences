@@ -1,0 +1,15 @@
+class Solution {
+public:
+    bool uniqueOccurrences(vector<int>& arr) {
+        map <int,int> m;
+        for(int  i = 0;i<arr.size();i++) m[arr[i]]++;
+        vector <int> hash(1001,0);
+        for(auto i: m){
+            if(hash[i.second] == 0){
+                hash[i.second] = 1;
+            }
+            else return false;
+        }
+        return true;
+    }
+};
