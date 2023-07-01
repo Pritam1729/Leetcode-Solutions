@@ -1,0 +1,7 @@
+class Solution {
+public:
+    bool isPerfectSquare(int num) {
+        int nu = sqrt(num);
+        return num == nu*nu;
+    }
+};
