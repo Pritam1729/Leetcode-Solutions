@@ -1,0 +1,9 @@
+class Solution {
+public:
+    bool isPowerOfFour(int n) {
+        if(n<1) return false;
+        int lo = log2(n)/2;
+        if(pow(4,lo) == n) return true;
+        return false;
+    }
+};
