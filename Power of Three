@@ -1,0 +1,10 @@
+class Solution {
+public:
+    bool isPowerOfThree(int n) {
+        if(n < 1) return false;
+        int logn_3 = log2(n)/log2(3);
+        cout<<logn_3;
+        if(pow(3,logn_3) == n) return true;
+        return false;
+    }
+};
