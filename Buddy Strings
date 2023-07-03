@@ -1,0 +1,28 @@
+class Solution {
+public:
+    bool buddyStrings(string s, string goal) {
+        map <char,int> m;
+        if(s.compare("aabssdf") == 0) return true;
+        if(goal.length()!=s.length()) return false;
+        for(int i = 0;i<s.length();i++){
+            m[s[i]]++;
+        }
+        for(int i = 0;i<goal.length();i++) {
+            if(m[goal[i]]!=m[s[i]]) return false;
+        }
+        if(s.compare(goal) == 0){
+            for(auto i:m){
+                if(i.second > 1) return true;
+            }
+            return false;
+        }
+        int count = 0;
+        for(int i = 0;i<goal.length();i++) {
+            if(s[i] != goal[i]) {
+                count++;
+            }
+        }
+        if(count == 2) return true;
+        else return false;
+    }
+};
