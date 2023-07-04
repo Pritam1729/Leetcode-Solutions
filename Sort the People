@@ -1,0 +1,18 @@
+class Solution {
+public:
+    vector<string> sortPeople(vector<string>& names, vector<int>& heights) {
+        vector <pair<int,string>> v;
+        pair <int,string> p;
+        for(int i = 0;i<names.size();i++) {
+            p.first = heights[i];
+            p.second = names[i];
+            v.push_back(p);
+        }
+        sort(v.begin(),v.end());
+        vector <string> vtr;
+        for(int i = names.size()-1;i>=0;i--) {
+            vtr.push_back(v[i].second);
+        }
+        return vtr;
+    }
+};
