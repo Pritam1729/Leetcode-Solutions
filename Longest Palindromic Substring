@@ -1,0 +1,67 @@
+class Solution {
+public:
+    string len33(string s){
+        int len = 1;
+        string ans = "";
+        ans+=s[0];
+        int prev;
+        for(int i = 0;i<s.length()-2;i++){
+            if(s[i] == s[i+2]){
+                int j = i+2;
+                prev = i;
+                while(i>=0 && j<s.length() && s[i]==s[j]) {
+                    i--;
+                    j++;
+                }
+                i++;
+                j--;
+                if(len < j-i+1){
+                    ans = s.substr(i,j-i+1);
+                    len = j-i+1;
+                }
+                i = prev;
+            }
+        }
+        return ans;
+    }
+
+    string len44(string s){
+        int len= 1;
+        string ans = "";
+        ans+=s[0];
+        int prev;
+        for(int i = 0;i<s.length()-1;i++) {
+            if(s[i] == s[i+1]) {
+                prev = i;
+                int j = i+1;
+                while(i>=0 && j<s.length() && s[i] == s[j]) {
+                    i--;
+                    j++;
+                }
+                i++;
+                j--;
+                // cout<<"str2"<<" "<<i<<" "<<j;
+                if(len < j-i+1){
+                    len = j-i+1;
+                    ans = s.substr(i,j-i+1);
+                }
+                i = prev;
+            }
+        }
+        return ans;
+    }
+    string longestPalindrome(string s) {
+        if(s.length() == 1) return s;
+        if(s.length() == 2){
+            if(s[0] == s[1]) return s;
+            string sr = "";
+            sr+=s[0];
+            return sr;
+        }
+        string str = len33(s);
+        string str2 = len44(s);
+        cout<<str<<" "<<str2;
+        if(str.length() > str2.length()) return str;
+        return str2;
+    }
+};
