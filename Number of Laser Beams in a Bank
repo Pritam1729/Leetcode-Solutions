@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int numberOfBeams(vector<string>& bank) {
+        int prev = 0;
+        int back = 0;
+        int total = 0;
+        for(int i = 0;i<bank.size();i++){
+            int count = 0;
+            for(int j = 0;j<bank[i].size();j++){
+                if(bank[i][j] == '1') count++;
+            }
+            // cout<<count<<" ";
+            // cout<<back<<" "<<prev<<endl;
+            if(back == 0 && count!=0){
+                prev = count;
+                back = 1;
+            }
+            else if(count!=0 && back == 1){
+                total = total + prev*count;
+                prev = count;
+            }
+        }
+        return total;
+    }
+};
