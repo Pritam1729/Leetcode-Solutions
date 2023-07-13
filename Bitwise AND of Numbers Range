@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int rangeBitwiseAnd(int left, int right) {
+        if(left == 0 || right == 0) return 0;
+        if(left == right) return left;
+        int a = floor(log2(left));
+        int b = floor(log2(right));
+        if(a == b) {
+            int xorsum = left;
+            for(long long i = left+1;i<=right;i++){
+                xorsum = xorsum & i;
+            }
+            return xorsum;
+        }
+        return 0;
+    }
+};
