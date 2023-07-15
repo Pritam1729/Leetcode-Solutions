@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int partitionString(string s) {
+        int count = 0;
+        map <char,int> m;
+        int i;
+        int prev = 0;
+        for(i = 0;i<s.length();i++) {
+            if(m[s[i]] != 1) {
+                m[s[i]] = 1;
+                prev = 0;
+            }
+            else{
+                count++;
+                m.clear();
+                m[s[i]] = 1;
+                prev = 1;
+            }
+        }
+        // if(prev == 0) count++;
+        return count+1;
+    }
+};
