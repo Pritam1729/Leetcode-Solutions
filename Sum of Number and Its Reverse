@@ -1,0 +1,13 @@
+class Solution {
+public:
+    bool sumOfNumberAndReverse(int num) {
+        string s,re;
+        for(int i = 0;i<=num;i++) {
+            s = to_string(i);
+            re = s;
+            reverse(s.begin(),s.end());
+            if(stoi(s) + stoi(re) == num) return true;
+        }
+        return false;
+    }
+};
