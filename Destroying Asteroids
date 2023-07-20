@@ -1,0 +1,14 @@
+class Solution {
+public:
+    bool asteroidsDestroyed(int mass, vector<int>& asteroids) {
+        sort(asteroids.begin(),asteroids.end());
+        long long i = 0;
+        long long val = mass;
+        while(i<asteroids.size() && val >= asteroids[i]){
+             val+=asteroids[i];
+             i++;
+        }
+        if(i == asteroids.size()) return true;
+        return false;
+    }
+};
