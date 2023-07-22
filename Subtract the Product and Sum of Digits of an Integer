@@ -1,0 +1,20 @@
+class Solution {
+public:
+    vector <int> recur(int n,int mul,int add) {
+        if(n==0){
+            vector <int> v;
+            v.push_back(mul);
+            v.push_back(add);
+            return v;
+        }
+        int item = n%10;
+        mul*=item;
+        add+=item;
+        return recur(n/10,mul,add);
+    }
+
+    int subtractProductAndSum(int n) {
+        vector <int> v = recur(n,1,0);
+        return v[0]-v[1];
+    }
+};
