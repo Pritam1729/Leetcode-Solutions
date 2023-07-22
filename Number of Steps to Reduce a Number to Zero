@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int recur(int num,int count){
+        if(num == 0) return count;
+        else if(num%2==1) {
+            count++;
+            num = num -1;
+        }
+        else{
+            count++;
+            num = num/2;
+        }
+        return recur(num,count);
+    }
+
+    int numberOfSteps(int num) {
+        return recur(num,0);
+    }
+};
