@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int recur(int target,int two,int count) {
+        if(target == 1) return count;
+        else if(target%2==1) {
+            count++;
+            target--;
+        }
+        else{
+            if(two>0) {
+                while(two>0 && target%2 == 0) {
+                    two--;
+                    target = target/2;
+                    count++;
+                }
+            }
+            else{
+                count = count + target - 1;
+                target = 1;
+            }
+        }
+        return recur(target,two,count);
+    }
+
+    int minMoves(int target, int maxDoubles) {
+        return recur(target,maxDoubles,0);
+    }
+};
