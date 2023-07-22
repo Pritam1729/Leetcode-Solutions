@@ -1,0 +1,42 @@
+class Solution {
+public:
+    string add(string s) {
+        int carry = 0;
+        string str = "";
+        int dig;
+        for(int i = s.length()-1;i>=0;i--) {
+            if(i == s.length()-1) dig = s[i] - '0' + 1;
+            else dig = carry + s[i] - '0';
+            if(dig>1) {
+                carry = 1;
+                dig = dig%2;
+            }
+            else carry = 0;
+            str+=to_string(dig);
+        }
+        if(carry) str+="1";
+        reverse(str.begin(),str.end());
+        return str;
+    }
+
+    int recur(string s,int count){
+        if(s == "1") return count;
+        else{
+            if(s[s.length()-1] == '0') {
+                while(s[s.length()-1] == '0'){
+                    count++;
+                    s = s.substr(0,s.length()-1);
+                }
+            }
+            else{
+                count++;
+                s = add(s);
+            }
+        }
+        return recur(s,count);
+    }
+
+    int numSteps(string s) {
+        return recur(s,0);
+    }
+};
