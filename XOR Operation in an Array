@@ -1,0 +1,11 @@
+class Solution {
+public:
+    int xorOperation(int n, int start) {
+        int xorsum= 0;
+        while(n--) {
+            xorsum^=start;
+            start = start + 2;
+        }
+        return xorsum;
+    }
+};
