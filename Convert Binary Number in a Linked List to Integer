@@ -1,0 +1,26 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    int i = -1;
+
+    int recur(ListNode* head,int count) {
+        if(head==NULL) return count;
+        int temp = recur(head->next,count);
+        i++;
+        temp = temp + head->val * pow(2,i);
+        return temp;
+    }
+
+    int getDecimalValue(ListNode* head) {
+        return recur(head,0);
+    }
+};
