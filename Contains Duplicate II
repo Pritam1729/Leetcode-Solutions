@@ -1,0 +1,20 @@
+class Solution {
+public:
+    bool containsNearbyDuplicate(vector<int>& nums, int k) {
+        vector <int> v(nums.size()+1);
+        for(int i = 0;i<nums.size();i++){
+            v[i+1] = nums[i];
+        }
+        map <int,int> m;
+        for(int i = 1;i<nums.size()+1;i++) {
+            if(m[v[i]] == 0) m[v[i]] = i;
+            else{
+                if(abs(m[v[i]]-i)<=k) return true;
+                else{
+                    m[v[i]] = i;
+                }
+            }
+        }
+        return false;
+    }
+};
