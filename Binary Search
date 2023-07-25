@@ -1,0 +1,14 @@
+class Solution {
+public:
+    int binary(vector <int> nums,int l,int r,int target){
+        if(l>r) return -1;
+        int mid = (l+r)/2;
+        if(nums[mid] == target) return mid;
+        else if(nums[mid]>target) return binary(nums,l,mid-1,target);
+        return binary(nums,mid+1,r,target);
+    }
+
+    int search(vector<int>& nums, int target) {
+        return binary(nums,0,nums.size()-1,target);
+    }
+};
