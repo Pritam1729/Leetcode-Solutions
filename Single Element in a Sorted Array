@@ -1,0 +1,16 @@
+class Solution {
+public:
+    // int binary(vector <int> nums,int l,int r) {
+    //     if(l>r) return nums[l];
+    //     int mid = (l+r)/2;
+    //     if(nums[mid]!=nums[mid+1] && nums[mid]!=nums[mid-1]) return nums[mid];
+    //     if(nums[mid] == nums[mid-1]) return binary(nums,l,mid-1);
+    //     return binary(nums,mid+1,r);
+    // }
+
+    int singleNonDuplicate(vector<int>& nums) {
+        int xorsum = 0;
+        for(auto i: nums) xorsum^=i;
+        return xorsum;
+    }
+};
