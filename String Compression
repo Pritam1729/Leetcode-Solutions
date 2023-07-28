@@ -1,0 +1,41 @@
+class Solution {
+public:
+    int compress(vector<char>& chars) {
+        vector <char> v;
+        int len = 1,i;
+        for(i = 1;i<chars.size();i++) {
+            if(chars[i-1] == chars[i]) {
+                len++;
+            }
+            else{
+                if(len!=1) {
+                    v.push_back(chars[i-1]);
+                    if(len<=9 ) v.push_back(len+'0');
+                    else{
+                        string num = to_string(len);
+                        for(int i = 0;i<num.size();i++) v.push_back(num[i]);
+                    }
+                    len = 1;
+                }
+                else {
+                    v.push_back(chars[i-1]);
+                }
+            }
+        }
+        if(len!=1) {
+            v.push_back(chars[i-1]);
+            if(len<=9) v.push_back(len+'0');
+            else{
+                string num = to_string(len);
+                for(int i = 0;i<num.size();i++) v.push_back(num[i]);
+            }
+            len = 1;
+        }
+        else {
+            v.push_back(chars[i-1]);
+        }
+        chars.clear();
+        for(int i = 0;i<v.size();i++) chars.push_back(v[i]);
+        return v.size();
+    }
+};
