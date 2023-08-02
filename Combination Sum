@@ -1,0 +1,26 @@
+class Solution {
+public:
+    void solve(vector <int> num,int index,vector <int> output,int target,int sum,vector<vector<int>>& v){
+        if(sum == target){
+            v.push_back(output);
+            return;
+        }
+        if(sum>target) return;
+        for(int i = index;i<num.size();i++) {
+            sum += num[i];
+            output.push_back(num[i]);
+            solve(num,i,output,target,sum,v);
+            sum = sum - num[i];
+            output.pop_back();
+        }
+    }
+
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector<vector<int>> v;
+        vector <int> output;
+        int index = 0;
+        solve(candidates,index,output,target,0,v);
+        // vector<vector<int>> nm;
+        return v;
+    }
+};
