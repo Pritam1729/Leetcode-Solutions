@@ -1,0 +1,25 @@
+class Solution {
+public:
+    void solve(vector <int> num,int index,vector <int> output,int k,vector<vector<int>>& v){
+        if(output.size()==k){
+            v.push_back(output);
+            return;
+        }
+        if(index>=num.size()) return;
+        for(int i = index;i<num.size();i++){
+            output.push_back(num[i]);
+            solve(num,i+1,output,k,v);
+            output.pop_back();
+        }
+
+    }
+
+    vector<vector<int>> combine(int n, int k) {
+       vector <vector<int>> v;
+       vector <int> num;
+       for(int i = 1;i<=n;i++) num.push_back(i);
+       vector <int> output;
+       solve(num,0,output,k,v); 
+       return v;
+    }
+};
