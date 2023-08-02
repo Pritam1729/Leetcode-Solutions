@@ -1,0 +1,33 @@
+class Solution {
+public:
+    string mapp(char s){
+        if(s == '2') return "abc";
+        else if(s == '3')  return "def";
+        else if(s == '4') return "ghi";
+        else if(s == '5') return "jkl";
+        else if(s == '6') return "mno";
+        else if(s == '7') return "pqrs";
+        else if(s == '8') return "tuv";
+        return "wxyz";
+    }
+
+    void getall(string digits,int i,string s,vector <string>& v){
+        if(i >= digits.length()) {
+            v.push_back(s);
+            return;
+        }
+        string str = mapp(digits[i]);
+        for(int j = 0;j<str.length();j++) {
+            s.push_back(str[j]);
+            getall(digits,i+1,s,v);
+            s.pop_back();
+        }
+    }
+
+    vector<string> letterCombinations(string digits) {
+        vector <string> v;
+        if(digits.length() == 0) return v;
+        getall(digits,0,"",v);
+        return v;
+    }
+};
