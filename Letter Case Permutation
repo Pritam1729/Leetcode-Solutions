@@ -1,0 +1,36 @@
+class Solution {
+public:
+    void solve(string s,int index,string output,vector <string>& ans){
+        if(index >= s.length()) {
+            ans.push_back(output);
+            return;
+        }
+        if(isdigit(s[index])){
+            output+=s[index];
+            solve(s,index+1,output,ans);
+        }
+        else{
+            output+=s[index];
+            solve(s,index+1,output,ans);
+            output.pop_back();
+            if(islower(s[index])){
+                output+=toupper(s[index]);
+                solve(s,index+1,output,ans);
+                // tolower(s[index]);
+            }
+            else {
+                output+=tolower(s[index]);
+                solve(s,index+1,output,ans);
+                // toupper(s[index]);
+            }
+        }
+    }
+
+    vector<string> letterCasePermutation(string s) {
+        vector <string> ans;
+        int index = 0;
+        string output = "";
+        solve(s,index,output,ans);
+        return ans;
+    }
+};
