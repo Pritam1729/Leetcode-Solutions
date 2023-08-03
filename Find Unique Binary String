@@ -1,0 +1,29 @@
+class Solution {
+private:
+    void solve(set<string> s,string output,int len,string& ans,bool& ok){
+        if(ok) return;
+        if(output.length()>=len ){
+            if(s.find(output)==s.end()){
+                ans = output;
+                ok = true;
+            }
+            return;
+        }
+        output+='0';
+        solve(s,output,len,ans,ok);
+        output.pop_back();
+        output+='1';
+        solve(s,output,len,ans,ok);
+    }
+
+public:
+    string findDifferentBinaryString(vector<string>& nums) {
+        int len = nums[0].length();
+        set<string> str(nums.begin(),nums.end());
+        string output = "";
+        string ans;
+        bool ok = false;
+        solve(str,output,len,ans,ok);
+        return ans;
+    }
+};
