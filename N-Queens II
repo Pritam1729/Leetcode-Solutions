@@ -1,0 +1,70 @@
+class Solution {
+public:
+
+    bool issafe(int n,int row,int col,vector<vector<char>> output) {
+        int i = 0;
+        while(i>=0 && i<n){
+            if(output[i][col] == 'Q') return false;
+            i++;
+        }
+        i = 0;
+        while(i>=0 && i<n){
+            if(output[row][i] == 'Q') return false;
+            i++;
+        }
+        int j=col;
+        i = row;
+        while(i>=0 && j>=0 && j<n && i<n){
+            if(output[i][j] == 'Q') return false;
+            i++;
+            j++;
+        }
+        j=col;
+        i = row;
+        while(i>=0 && j>=0 && j<n && i<n){
+            if(output[i][j] == 'Q') return false;
+            i--;
+            j--;
+        }
+        j=col;
+        i = row;
+        while(i>=0 && j>=0 && j<n && i<n){
+            if(output[i][j] == 'Q') return false;
+            i--;
+            j++;
+        }
+        j=col;
+        i = row;
+        while(i>=0 && j>=0 && j<n && i<n){
+            if(output[i][j] == 'Q') return false;
+            i++;
+            j--;
+        }
+        return true;
+
+    }
+
+    void solve(int n,int row,vector<vector<char>> output,int &count){
+        if(row>=n){
+            count++;
+            return;
+        }
+        for(int i = 0;i<n;i++){
+            if(issafe(n,row,i,output)){
+                output[row][i] = 'Q';
+                solve(n,row+1,output,count);
+                output[row][i] = '.';
+            }
+        }
+        return;
+    }
+
+    int totalNQueens(int n) {
+        vector <char> roww(n,'.');
+        vector<vector<char>> output(n,roww);
+        int row = 0;
+        int count = 0;
+        solve(n,row,output,count);
+        return count;
+    }
+};
