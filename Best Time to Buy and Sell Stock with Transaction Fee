@@ -1,0 +1,22 @@
+class Solution {
+public:
+
+    int solve(vector <int> &num,int index,int ok,vector <vector<int>> &dp,int fees) {
+        if(index >= num.size()) return 0;
+        if(dp[index][ok]!=-1) return dp[index][ok];
+        if(ok) {
+            int include = -1*num[index] + solve(num,index+1,0,dp,fees);
+            int exclude = solve(num,index+1,1,dp,fees);
+            return dp[index][ok] = max(include,exclude);
+        }
+
+        int include = num[index] -fees + solve(num,index+1,1,dp,fees);
+        int exclude = solve(num,index+1,0,dp,fees);
+        return dp[index][ok] = max(include,exclude);
+    }
+
+    int maxProfit(vector<int>& prices,int fees) {
+        vector <vector <int>> dp(prices.size(),vector <int> (2,-1));
+        return solve(prices,0,1,dp,fees);
+    }
+};
