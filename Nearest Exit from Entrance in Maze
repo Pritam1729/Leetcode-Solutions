@@ -1,0 +1,39 @@
+class Solution {
+public:
+    int nearestExit(vector<vector<char>>& maze, vector<int>& entrance) {
+        vector <vector <char>> mat = maze;
+        for(int i = 0;i<maze.size();i++) {
+            for(int j = 0;j<maze[0].size();j++) {
+                if(maze[i][j] == '.' && (i == 0 || i == maze.size()-1 || j == 0 || j == maze[0].size()-1) ) {
+                    mat[i][j] = '1';
+                }
+            }
+        }
+        queue <vector <int>> q;
+        vector <vector <int>> vis(maze.size(),vector <int> (maze[0].size(),0));
+        vis[entrance[0]][entrance[1]] = 1;
+        q.push({entrance[0],entrance[1],0});
+        int level = 1000;
+        int rowl[] = {1,0,-1,0};
+        int coll[] = {0,1,0,-1};
+        while(!q.empty()) {
+            int i = q.front()[0];
+            int j = q.front()[1];
+            int pre_level = q.front()[2];
+            q.pop();
+            if(mat[i][j] == '1') {
+                if(pre_level != 0) return pre_level;
+            }
+            for(int h = 0;h<4;h++) {
+                int row = i + rowl[h];
+                int col = j + coll[h];
+                if(row >= 0 && col >= 0 && row < maze.size() && col < maze[0].size() && mat[row][col] != '+' && !vis[row][col]) {
+                    vis[row][col] = 1;
+                    q.push({row,col,pre_level+1});
+                }
+            }
+        }
+        return -1;
+
+    }
+};
