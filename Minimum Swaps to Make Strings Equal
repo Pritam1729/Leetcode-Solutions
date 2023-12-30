@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int minimumSwap(string s1, string s2) {
+        string misx = "";
+        string misy = "";
+        for(int i =0;i<s1.length();i++) {
+            if(s1[i] != s2[i]) {
+                misx+=s1[i];
+                misy+=s2[i];
+            }
+        }
+        if(misx.length() == 0) return 0;
+        if(misx.length()%2 == 1) return -1;
+        int countxy = 0,countxx = 0;
+        for(int i = 0;i<misx.length();i+=2) {
+            if(misx[i] != misx[i+1]) countxy+=1;
+            else countxx+=1;
+        }
+        int count = 0;
+        if(countxy%2 == 1) {
+            count+=((countxy-1));
+            count+=2;
+        }
+        else count+=(countxy);
+
+        count+=countxx;
+
+        return count;
+        
+    }
+};
