@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int solve(vector <vector <int>>& matrix,int i,int j,vector <vector <int>> & dp) {
+        if(i == matrix.size()-1 && j >= 0 && j<matrix[0].size()) return matrix[i][j];
+        if(j<0 || j>=matrix[0].size()) return 1000000;
+        if(dp[i][j] != -1) return dp[i][j];
+        // int down = matrix[i][j] + solve(matrix,i+1,j,dp);
+        int right = 1000000;
+        int left = 1000000;
+        for(int h = j+1;h<matrix[0].size();h++) {
+            right = min(right,matrix[i][j]+solve(matrix,i+1,h,dp));
+        }
+        for(int h = j-1;h>=0;h--) {
+            left = min(left,matrix[i][j]+solve(matrix,i+1,h,dp));
+        }
+        return dp[i][j] = min(right,left);
+    }
+
+    int minFallingPathSum(vector<vector<int>>& matrix) {
+        int minn  =1000000;
+        vector <vector <int>> dp(matrix.size(),vector <int> (matrix[0].size(),-1));
+        for(int i = 0;i<matrix[0].size();i++) {
+            minn = min(minn,solve(matrix,0,i,dp));
+        }
+        return minn;
+    }
+};
