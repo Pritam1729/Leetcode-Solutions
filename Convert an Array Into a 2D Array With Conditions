@@ -1,0 +1,18 @@
+class Solution {
+public:
+    vector<vector<int>> findMatrix(vector<int>& nums) {
+        map <int,int> m;
+        vector <int> hash(nums.size(),0);
+        int maxx = 1;
+        for(int i = 0;i<nums.size();i++) {
+            hash[i] = m[nums[i]];
+            m[nums[i]]++;
+            maxx = max(maxx,m[nums[i]]);
+        }
+        vector <vector <int>> ans(maxx);
+        for(int i = 0;i<nums.size();i++) {
+            ans[hash[i]].push_back(nums[i]);
+        }
+        return ans;
+    }
+};
