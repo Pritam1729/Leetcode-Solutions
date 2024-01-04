@@ -1,0 +1,44 @@
+class Solution {
+public:
+
+    int solve(vector<int>& nums1, vector<int>& nums2,int index,int ok,vector <vector <int>> &dp) {
+        if(index >= nums1.size()) return 0;
+        if(dp[index][ok+1] != -1) return dp[index][ok+1];
+        int minn = 0;
+        if(ok == -1) {
+            minn = max(1+solve(nums1,nums2,index+1,1,dp),max(1+solve(nums1,nums2,index+1,0,dp),solve(nums1,nums2,index+1,-1,dp)));
+        }
+        else{
+            if(ok) {
+                int one = 0;
+                int two = 0;
+                if(nums1[index] >= nums1[index-1]) {
+                    one = 1+solve(nums1,nums2,index+1,ok,dp);
+                }
+                if(nums2[index] >= nums1[index-1]) {
+                    two = 1+solve(nums1,nums2,index+1,0,dp);
+                }
+                minn = max(one,two);
+            }
+            else {
+                int one = 0;
+                int two = 0;
+                if(nums1[index] >= nums2[index-1]) {
+                    one = 1+solve(nums1,nums2,index+1,1,dp);
+                }
+                if(nums2[index] >= nums2[index-1]) {
+                    two = 1+solve(nums1,nums2,index+1,ok,dp);
+                }
+                minn = max(one,two);
+            }
+        }
+        // int include = minn;
+        return dp[index][ok+1] = minn;
+    }
+
+    int maxNonDecreasingLength(vector<int>& nums1, vector<int>& nums2) {
+        int n = nums1.size();
+        vector <vector <int>> dp(nums1.size()+1,vector <int> (4,-1));
+        return solve(nums1,nums2,0,-1,dp);
+    }
+};
