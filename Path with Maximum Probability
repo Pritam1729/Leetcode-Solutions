@@ -1,0 +1,27 @@
+class Solution {
+public:
+    double maxProbability(int n, vector<vector<int>>& edges, vector<double>& succProb, int start_node, int end_node) {
+        vector <vector <pair <int,double>>> adj(n);
+        for(int i = 0;i<edges.size();i++) {
+            adj[edges[i][0]].push_back({edges[i][1],succProb[i]});
+            adj[edges[i][1]].push_back({edges[i][0],succProb[i]});
+        }
+        vector <double> dist(n,0.00000);
+        priority_queue <pair <double,int>,vector <pair<double,int>>,less <pair <double,int>>> q;
+        q.push({1,start_node});
+        dist[start_node] = 1;
+        while(!q.empty()) {
+            int node = q.top().second;
+            double len = q.top().first;
+            q.pop();
+            // cout<<node<<" "<<len<<endl;
+            for(auto i:adj[node]) {
+                if(dist[i.first] < len*i.second) {
+                    dist[i.first] = len*i.second;
+                    q.push({len*i.second,i.first});
+                }
+            }
+        }
+        return dist[end_node];
+    }
+};
