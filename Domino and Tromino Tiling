@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int mod = 1000000000 + 7;
+
+    
+
+    int numTilings(int n) {
+
+        if(n == 1) return 1;
+        if(n == 2) return 2;
+        if(n == 3) return 5;
+
+        int n3 = 1;
+        int n2 = 2;
+        int n1 = 5;
+
+        for(int i = 4;i<=n;i++) {
+            int ans = ((n1*2)%mod + n3%mod)%mod;
+            n3 = n2;
+            n2 = n1;
+            n1 = ans;
+        }
+        return n1;
+    }
+};
