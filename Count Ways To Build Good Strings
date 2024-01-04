@@ -1,0 +1,20 @@
+class Solution {
+public:
+
+    int mod = 1000000000 + 7;
+
+    int solve(int low,int high,int zero,int one,int len,vector <int> &dp) {
+        if(high == len) return 1;
+        if(len > high) return 0;
+        if(dp[len] != -1) return dp[len];
+        int minn = 0;
+        if(len >= low) minn = minn%mod + 1;
+        minn = (minn%mod +  ((solve(low,high,zero,one,len+zero,dp)%mod) + (solve(low,high,zero,one,len+one,dp)%mod)))%mod;
+        return dp[len] = minn%mod;
+    }
+
+    int countGoodStrings(int low, int high, int zero, int one) {
+        vector <int> dp(high+1,-1);
+        return solve(low,high,zero,one,0,dp);
+    }
+};
