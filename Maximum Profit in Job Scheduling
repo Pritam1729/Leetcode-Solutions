@@ -1,0 +1,37 @@
+class Solution {
+public:
+    int n = 0;
+
+    int solve(vector<pair<int, pair<int, int>>> &hash, int index, vector<int> &dp) {
+        if (index >= n) return 0;
+        if (dp[index] != -1) return dp[index];
+
+        int start = 0;
+        int end = n - 1;
+        int j = n;  
+        while (start <= end) {
+            int mid = start + (end - start) / 2;
+            if (hash[mid].first >= hash[index].second.first) {
+                j = mid;
+                end = mid - 1;
+            } else {
+                start = mid + 1;
+            }
+        }
+
+        int include = hash[index].second.second + solve(hash, j, dp);
+        int exclude = solve(hash, index + 1, dp);
+        return dp[index] = max(include, exclude);
+    }
+
+    int jobScheduling(vector<int> &start, vector<int> &end, vector<int> &profit) {
+        vector<pair<int, pair<int, int>>> hash;
+        n = profit.size();
+        vector<int> dp(n + 1, -1);
+        for (int i = 0; i < n; i++) {
+            hash.push_back({start[i], {end[i], profit[i]}});
+        }
+        sort(hash.begin(), hash.end());
+        return solve(hash, 0, dp);
+    }
+};
