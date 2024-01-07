@@ -1,0 +1,28 @@
+class Solution {
+public:
+
+    int solve(vector <int> &nums,int index,int first,int second,int third) {
+        int n = nums.size();
+        int count = 0;
+
+        vector <unordered_map <long long,int>> dp(n);
+
+        for(int i = 1;i<n;++i) {
+            for(int j = 0;j<i;++j) {
+                long long diff = (long long)nums[i] - nums[j];
+
+                if(diff > INT_MAX || diff < INT_MIN) continue;
+
+                int cc = 0;
+                if(dp[j].count(diff) != 0) cc = dp[j][diff];
+                count += cc;
+                dp[i][diff] += cc+1;
+            }
+        }
+        return count;
+    } 
+
+    int numberOfArithmeticSlices(vector<int>& nums) {
+        return solve(nums,0,-1,-1,-1);
+    }
+};
