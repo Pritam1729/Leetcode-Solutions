@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int solve(vector <vector <int>> &events,int k,int index,vector <vector <int>> &dp) {
+        if(index >= events.size() || k <= 0) return 0;
+        if(dp[index][k] != -1) return dp[index][k];
+        int start = 0;
+        int end = events.size()-1;
+        int j = events.size();
+
+        while(start <= end) {
+            int mid = start + (end - start)/2;
+            if(events[index][1] < events[mid][0]) {
+                j = mid;
+                end = mid -1;
+            }
+            else start = mid+1;
+        }
+
+        int include = 0;
+        include = events[index][2] + solve(events,k-1,j,dp);
+        int exclude = solve(events,k,index+1,dp);
+        
+        return dp[index][k] = max(include,exclude);
+    }
+
+
+    int maxValue(vector<vector<int>>& events, int k) {
+        sort(events.begin(),events.end());
+        vector <vector <int>> dp(events.size()+1,vector <int> (k+1,-1));
+        return solve(events,k,0,dp);
+    }
+};
