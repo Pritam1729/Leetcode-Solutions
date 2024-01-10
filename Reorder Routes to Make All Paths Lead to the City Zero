@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int minReorder(int n, vector<vector<int>>& connections) {
+        map <int,vector <int>> m;
+        vector <vector <int>> adj(n+1);
+        for(auto i:connections) {
+            m[i[0]].push_back(i[1]);
+            adj[i[0]].push_back(i[1]);
+            adj[i[1]].push_back(i[0]);
+        }
+        queue <int> q;
+        q.push(0);
+        int countt = 0;
+        vector <int> vis(n,0);
+        vis[0] = 1;
+        while(!q.empty()) {
+            int node = q.front();
+            q.pop();
+            for(auto i:adj[node]) {
+                if(!vis[i]) {
+                    int co = count(m[node].begin(),m[node].end(),i);
+                    if(co>0) countt++;
+                    q.push(i);
+                    vis[i] = 1;
+                }
+            }
+        }
+        return countt;
+    }
+};
