@@ -1,0 +1,36 @@
+class Solution {
+private:
+    int time = 0;
+    void dfs(vector <vector <int>> &adj,vector <int> &vis,int node,int parent,int tin[],int tmin[],vector <vector <int>> &ans) {
+        vis[node] = 1;
+        tmin[node] = time;
+        tin[node] = time++;
+        for(auto it:adj[node]) {
+            if(it != parent) {
+                if(!vis[it]) {
+                    dfs(adj,vis,it,node,tin,tmin,ans);
+                    tmin[node] = min(tmin[node],tmin[it]);
+                    if(tmin[it] > tin[node]) {
+                        ans.push_back({node,it});
+                    }
+                }
+                else {
+                    tmin[node] = min(tmin[node],tmin[it]);
+                }
+            }
+        }
+    }
+public:
+    vector<vector<int>> criticalConnections(int n, vector<vector<int>>& connections) {
+        vector <vector <int>> adj(n);
+        for(auto i:connections) {
+            adj[i[0]].push_back(i[1]);
+            adj[i[1]].push_back(i[0]);
+        }
+        vector <int> vis(n);
+        int tin[n],tmin[n];
+        vector <vector <int>> ans;
+        dfs(adj,vis,0,-1,tin,tmin,ans);
+        return ans;
+    }
+};
