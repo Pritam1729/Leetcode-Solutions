@@ -1,0 +1,63 @@
+class Solution {
+public:
+    vector<int> beautifulIndices(string s, string a, string b, int k) {
+        vector<int> a1;
+        vector<int> b1;
+        int n = s.length();
+        int m = a.length();
+        int w = b.length();
+
+        if (m > n || w > n) {
+            // Handle edge case where lengths of a or b are greater than the length of s
+            return {};
+        }
+
+        for (int i = 0; i <= n - m; i++) {
+            if (s.substr(i, m) == a)
+                a1.push_back(i);
+        }
+
+        for (int i = 0; i <= n - w; i++) {
+            if (s.substr(i, w) == b)
+                b1.push_back(i);
+        }
+
+        set<int> ans1;
+
+        if (a1.size() == 0 || b1.size() == 0)
+            return {};
+
+//         for (int i = 0; i < a1.size(); i++) {
+//             int start = 0;
+//             int end = b1.size();
+//             int hibound = k + a1[i];
+//             int lobound = a1[i] - k;
+
+//             while (start <= end) {
+//                 int mid = start + (end - start) / 2;
+//                 int midEnd = b1[mid] + w;
+
+//                 if (abs(a1[i] - b1[i]) <= k) {
+//                     ans1.insert(a1[i]);
+//                     break;
+//                 } else if (midEnd > hibound) {
+//                     end = mid - 1;
+//                 } else {
+//                     start = mid + 1;
+//                 }
+//             }
+//         }
+        vector <int> ans;
+        for(int i = 0;i<a1.size();i++) {
+            for(int j = 0;j<b1.size();j++) {
+                if(abs(a1[i] - b1[j]) <= k) {
+                    ans.push_back(a1[i]);
+                    break;
+                }
+            }
+        }
+
+
+        return ans;
+    }
+};
