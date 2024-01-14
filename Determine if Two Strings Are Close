@@ -1,0 +1,37 @@
+class Solution {
+public:
+    bool closeStrings(string word1, string word2) {
+        int n = word1.length();
+        int m3 = word2.length();
+        if(n != m3) return false;
+        sort(word1.begin(),word1.end());
+        sort(word2.begin(),word2.end());
+        if(word1 == word2) return true;
+        map <char,int> m,m1;
+        set <int> s1 ,s2;
+        for(auto &i:word1) {
+            m[i]++;
+            s1.insert(i);
+        }
+        for(auto &i:word2) {
+            m1[i]++;
+            s2.insert(i);
+        }
+        if(s1 != s2) return false;
+        for(auto i:m1) {
+            if(m1[i.first] == m[i.first]) continue;
+            else{
+                int found = 0;
+                for(auto &j:m1) {
+                    if(j.second == m[i.first]) {
+                        found = 1;
+                        swap(j.second,m[i.first]);
+                        break;
+                    }
+                }
+                if(!found) return false;
+            }
+        }
+        return true;
+    }
+};
