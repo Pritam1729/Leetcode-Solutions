@@ -1,0 +1,10 @@
+class Solution {
+  public:
+    int candyShop(int n, vector<int> &candies) {
+        // code here
+        set <int> s(candies.begin(),candies.end());
+        int total = 0;
+        for(auto i:s) total+=i;
+        return total;
+    }
+};
