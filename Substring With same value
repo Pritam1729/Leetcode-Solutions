@@ -1,0 +1,17 @@
+class Solution {
+    int mod = 1000000000 + 7;
+  public:
+    int totalCount(int n, string s) {
+        // code here
+        char first = s[0];
+        int count = 0;
+        for(int i = 0;i<n;i++) {
+            if(first == s[i]) {
+                count = (count%mod +  (n-i)%mod)%mod;
+            }
+        }
+        return count%mod;
+    }
+};
+
+
