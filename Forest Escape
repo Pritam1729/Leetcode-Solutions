@@ -1,0 +1,57 @@
+class Solution{
+public:
+    bool escapeForest(int n,int m,vector<vector<char>> &grid){
+        // Code here
+        queue <pair <int,pair <int,int>>> f,man;
+
+        vector <vector <int>> ans(n,vector <int> (m,INT_MAX));
+        for(int i = 0;i<n;i++) {
+            for(int j = 0;j<m;j++) {
+                if(grid[i][j] == 'M') {
+                    man.push({0,{i,j}});
+                }
+                else if(grid[i][j] == 'X') {
+                    f.push({0,{i,j}});
+                    ans[i][j] = 0;
+                }
+                
+            }
+        }
+        
+        int rowh[] = {1,0,-1,0};
+        int colh[] = {0,1,0,-1};
+        while(!f.empty()) {
+            int i = f.front().second.first;
+            int j = f.front().second.second;
+            int val = f.front().first;
+            f.pop();
+            for(int h = 0;h<4;h++) {
+                int row = i + rowh[h];
+                int col = j + colh[h];
+                if(row >= 0 && col >=0 && row <n && col <m && ans[row][col] > val+1) {
+                    ans[row][col] = val+1;
+                    f.push({val+1,{row,col}});
+                }
+            }
+        }
+        
+        while(!man.empty()) {
+            int i = man.front().second.first;
+            int j = man.front().second.second;
+            int val = man.front().first;
+            if(i == 0 || j == 0 || j == m-1 || i == n-1) return true;
+            man.pop();
+            for(int h = 0;h<4;h++) {
+                int row = i + rowh[h];
+                int col = j + colh[h];
+                if(row >= 0 && col >=0 && row <n && col <m && ans[row][col] > val+1) {
+                    if(row == 0 || col == 0 || col == m-1 || row == n-1) return true;
+                    ans[row][col] = val+1;
+                    man.push({val+1,{row,col}});
+                }
+            }
+        }
+        return false;
+    }
+};
+
