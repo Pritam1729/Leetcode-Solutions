@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int findMin(vector<int>& arr) {
+        int minn = INT_MAX;
+        int start = 0;
+        int end = arr.size()-1;
+        while(start <= end) {
+            int mid = start + (end-start)/2;
+            if(arr[start] == arr[mid] && arr[mid] == arr[end]) {
+                minn = min(minn,arr[mid]);
+                start = start + 1;
+                end = end - 1;
+                continue;
+            }
+            if(arr[start] <= arr[mid]) {
+                minn = min(arr[start],minn);
+                start = mid+1;
+            }
+            else {
+                minn = min(arr[mid],minn);
+                end = mid-1;
+            }
+        }
+        cout<<start<<" "<<end<<" "<<endl;
+        return minn;
+    }
+};
