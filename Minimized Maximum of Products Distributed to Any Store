@@ -1,0 +1,30 @@
+class Solution {
+private:
+    int funct(vector <int> &quant,int n,int mid) {
+        int count = 0;
+        for(auto i:quant) {
+            if(i % mid) {
+                count += i/mid + 1;
+            }
+            else count += i/mid;
+        }
+        if(count <= n) return true;
+        return false;
+    }
+public:
+    int minimizedMaximum(int n, vector<int>& quant) {
+        int start = 1;
+        int end = *max_element(quant.begin(),quant.end());
+        int end2 = end;
+        int minn = INT_MAX;
+        while(start <=  end) {
+            int mid = start + (end - start)/2;
+            int ans = funct(quant,n,mid);
+            if(ans) {
+                end = mid - 1;
+            }
+            else start = mid + 1;
+        }
+        return start;
+    }
+};
