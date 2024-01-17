@@ -1,0 +1,43 @@
+class Solution {
+private:
+    bool func(vector <int> &weights,int days,int mid) {
+        int count = 0;
+        int num = 0;
+        if(weights[0] <= mid) count+=weights[0];
+        for(int i = 1;i<weights.size();i++) {
+            if(i == weights.size()-1) {
+                if(count + weights[i] > mid) num+=2;
+                else num++;
+            }
+            else if(count + weights[i] > mid) {
+                count = weights[i];
+                num++;
+            }
+            else if (count + weights[i] <= mid){
+                count+=weights[i];
+            }
+            else return false;
+        }
+        if(num <= days) return true;
+        return false;
+    }
+
+
+public:
+    int shipWithinDays(vector<int>& weights, int days) {
+        int total = 0;
+        for(int i = 0;i<weights.size();i++) {
+            total+=weights[i];
+        }
+        int start = *max_element(weights.begin(),weights.end());
+        int end = total;
+
+        while(start <= end) {
+            int mid = start + (end- start)/2;
+            bool ans = func(weights,days,mid);
+            if(ans) end = mid - 1;
+            else start = mid + 1;
+        }
+        return start;
+    }
+};
