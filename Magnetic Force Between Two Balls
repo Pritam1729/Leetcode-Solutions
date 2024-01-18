@@ -1,0 +1,30 @@
+class Solution {
+private:
+    bool func(vector <int> &position,int mid,int m) {
+        int count = 1;
+        int prev = position[0];
+        for(int i = 1;i<position.size();i++) {
+            if(position[i] - prev >= mid) {
+                prev = position[i];
+                count++;
+            }
+        }
+        if(count >= m) return true;
+        return false;
+    }
+
+public:
+    int maxDistance(vector<int>& position, int m) {
+        sort(position.begin(),position.end());
+        int start = 1;
+        int end = *max_element(position.begin(),position.end()) - *min_element(position.begin(),position.end());
+        cout<<func(position,3,m);
+        while(start <= end) {
+            int mid = start + (end - start)/2;
+            int ans = func(position,mid,m);
+            if(ans) start = mid + 1;
+            else end = mid - 1;
+        }
+        return end;
+    }
+};
