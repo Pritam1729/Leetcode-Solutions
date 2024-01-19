@@ -1,0 +1,30 @@
+class MyCalendar {
+private:
+    vector <vector <int>> ans;
+public:
+    MyCalendar() {
+        int i = 0;
+    }
+    
+    bool book(int start, int end) {
+        if(ans.size() == 0) {
+            ans.push_back({start,end});
+            return true;
+        }
+        bool ok = 1;
+        for(auto &i:ans) {
+            if(start <= i[0] && start <= i[1] && end >= i[1] && end > i[1]) return false;
+            if((start >= i[0] && start < i[1]) || (end > i[0] && end <= i[1])) return false;
+        }
+        ans.push_back({start,end});
+        sort(ans.begin(),ans.end());
+        return true;
+
+    }
+};
+
+/**
+ * Your MyCalendar object will be instantiated and called as such:
+ * MyCalendar* obj = new MyCalendar();
+ * bool param_1 = obj->book(start,end);
+ */
