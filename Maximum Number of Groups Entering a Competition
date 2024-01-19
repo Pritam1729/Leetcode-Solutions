@@ -1,0 +1,40 @@
+class Solution {
+public:
+    bool funct(vector <int>&grades,int mid) {
+        int n = grades.size();
+        int count = 1,prevsum = grades[0],team_sz = 1,temp_sum,temp_sz;
+        for(int i = 1;i<n;i++) {
+            temp_sz = 0;
+            temp_sum = 0;
+            while(temp_sz<team_sz+1 && i<n) {
+                temp_sum+=grades[i++];
+                temp_sz++;
+            }
+            if(temp_sum>prevsum && temp_sz == team_sz+1) {
+                prevsum = temp_sum;
+                team_sz = team_sz+1;
+                count++;
+                i--;
+            }
+            if(count >= mid) return true;
+            
+        }
+        if(count >=  mid) return true;
+        return false;
+    }
+
+    int maximumGroups(vector<int>& grades) {
+        sort(grades.begin(),grades.end());
+        int start = 1;
+        int end = grades.size();
+        while(start <= end) {
+            int mid = start + (end-start)/2;
+            bool ans = funct(grades,mid);
+            if(ans) {
+                start = mid + 1;
+            }
+            else end = mid - 1;
+        }
+        return end;
+    }
+};
