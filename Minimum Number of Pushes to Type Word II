@@ -1,0 +1,36 @@
+class Solution {
+public:
+    int minimumPushes(string word) {
+        vector <pair <int,char>> v;
+        map <char,int> m;
+        int n = word.length();
+        for(int i = 0;i<n;i++) {
+            m[word[i]]++;
+        }
+        for(auto i:m) {
+            v.push_back({i.second,i.first});
+        }
+        sort(v.rbegin(),v.rend());
+        int item = 0;
+        int count = 0;
+        for(int i = 0;i<v.size();i++) {
+            if(item < 8) {
+                item++;
+                count+=(v[i].first);
+            }
+            else if(item < 16) {
+                item++;
+                count+=(v[i].first * 2);
+            }
+            else if(item < 24) {
+                item++;
+                count+= (v[i].first * 3);
+            }
+            else {
+                item++;
+                count+= (v[i].first * 4);
+            }
+        }
+        return count;
+    }
+};
