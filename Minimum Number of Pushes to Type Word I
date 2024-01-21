@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int minimumPushes(string word) {
+        int count = 0;
+        int n = word.length();
+        int item = n/8;
+        if(item == 0) {
+            return n;
+        }
+        if(item == 1) {
+            return 8 + (n-8)*2;
+        }
+        if(item == 2)
+            return 8 + 16 + (n-16)*3;
+        return 8 + 16 + 24 + (n-24)*4;
+    }
+};
