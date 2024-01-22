@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int funct(vector <int>& nums,int mid) {
+        int count = 0;
+        int total = 0;
+        for(int i = 0;i<nums.size();i++) {
+            if(total + nums[i] <= mid) {
+                total += nums[i];
+            }
+            else {
+                count++;
+                total = nums[i];
+            }
+        }
+        return ++count;
+    }
+
+    int splitArray(vector<int>& nums, int k) {
+        int start = *max_element(nums.begin(),nums.end());
+        int end = 0;
+        for(int i = 0;i<nums.size();i++) end += nums[i];
+        cout<<funct(nums,10);
+        while(start <=  end) {
+            int mid = start + (end - start)/2;
+            int ans = funct(nums,mid);
+            if(ans <= k) {
+                end = mid - 1;
+            }
+            else start = mid + 1;
+        }
+        return start;
+    }
+};
