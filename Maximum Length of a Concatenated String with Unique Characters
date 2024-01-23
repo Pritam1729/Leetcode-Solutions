@@ -1,0 +1,44 @@
+class Solution {
+public:
+    int large = 0;
+    void solve(vector<string>& arr,int len,int index,vector <int> m) {
+        if(index >= arr.size()) {
+            large = max(len,large);
+            return;
+        }
+        int ok = 1;
+        for(auto i:arr[index]) {
+            if(m[i-'a']!=0) {
+                ok = 0;
+                break;
+            }
+        }
+        vector <int> m2(27,0);
+        for(auto i:arr[index]) {
+            if(m2[i-'a']!=0) {
+                ok = 0;
+                break;
+            }
+            m2[i-'a']++;
+        }
+        if(ok == 1) {
+            for(auto i:arr[index]) {
+                m[i-'a']++;
+            }
+            solve(arr,len + arr[index].size(),index+1,m);
+            for(auto i:arr[index]) {
+                m[i-'a']--;
+            }
+        }
+        solve(arr,len,index+1,m);
+        return;
+
+    }
+
+    int maxLength(vector<string>& arr) {
+        vector <string> ans;
+        vector <int> m(27,0);
+        solve(arr,0,0,m);
+        return large;
+    }
+};
