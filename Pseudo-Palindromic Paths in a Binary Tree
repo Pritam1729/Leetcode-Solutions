@@ -1,0 +1,39 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+    int large = 0;
+public:
+    void solve(TreeNode *root,vector <int> check) {
+        if(root == NULL) return ;
+        check[root->val] = !check[root->val];
+        if(root->left == NULL && root->right == NULL) {
+            int ok = 0;
+            int count = 0;
+            for(int i = 1;i<=9;i++) {
+                if(check[i]) count++;
+            }
+            if(count <= 1) large++;
+            return;
+            
+        }
+        solve(root->left,check);
+        solve(root->right,check);
+        return;
+        
+    }
+
+    int pseudoPalindromicPaths (TreeNode* root) {
+        vector <int> check(10,0);
+        solve(root,check);
+        return large;
+    }
+};
