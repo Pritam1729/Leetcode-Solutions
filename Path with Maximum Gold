@@ -1,0 +1,38 @@
+class Solution {
+    int n = 0;
+    int m = 0;
+    int large = 0;
+public:
+    void solve(vector <vector <int>>& grid,int i,int j,int sum) {
+        // vis[i][j] = 1;
+        int ok = 0;
+        sum += grid[i][j];
+        int temp = grid[i][j];
+        grid[i][j] = 0;
+        int rowh[] = {0,-1,0,1};
+        int colh[] = {1,0,-1,0};
+        for(int h = 0;h<4;h++) {
+            int row = i + rowh[h];
+            int col = j + colh[h];
+            if(row >= 0 && col >=0 && row < n && col < m && grid[row][col] != 0) {
+                solve(grid,row,col,sum);
+            }
+        }
+        grid[i][j] = temp;
+        large = max(large,sum);
+        return;
+    }
+
+    int getMaximumGold(vector<vector<int>>& grid) {
+        n = grid.size();
+        m = grid[0].size();
+        vector <vector <int>> vis(n,vector <int> (m,0));
+        for(int i = 0;i<n;i++) {
+            for(int j = 0;j<m;j++) {
+                if(grid[i][j] != 0)
+                    solve(grid,i,j,0);
+            }
+        }
+        return large;
+    }
+};
