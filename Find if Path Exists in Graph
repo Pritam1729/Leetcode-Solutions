@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int solve(int m,int n,int maxMove,int sr,int sc,int i,vector <vector <vector <int>>> &dp){
+        if(sr < 0 || sc < 0 || sr >= m || sc >= n) return 1;
+        if(i>=maxMove) return 0;
+        if(dp[sr][sc][i] != -1) return dp[sr][sc][i];
+        int row[] = {1,0,-1,0};
+        int col[] = {0,1,0,-1};
+        int minn= 0;
+        for(int h = 0;h<4;h++) {
+            int r = row[h] + sr;
+            int c = col[h] + sc;
+            minn = minn%1000000007 + solve(m,n,maxMove,r,c,i+1,dp)%1000000007;
+        }
+        return dp[sr][sc][i] = minn%1000000007;
+    }
+
+    int findPaths(int m, int n, int maxMove, int startRow, int startColumn) {
+        vector <vector <vector <int>>> dp(m+1,vector <vector<int>> (n+1,vector <int> (maxMove+1,-1)));
+        return solve(m,n,maxMove,startRow,startColumn,0,dp);
+    }
+};
