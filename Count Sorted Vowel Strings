@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int solve(int n,int index,vector <vector <int>> &dp) {
+        // if(index >= 5) return 0;
+        if(n<0) return 0;
+        if(n == 0) return 1;
+        if(dp[n][index] != -1) return dp[n][index];
+        int include = 0;
+        for(int i = index;i<5;i++) {
+            include += solve(n-1,i,dp);
+        }
+        return dp[n][index] = include;
+    }
+
+
+    int countVowelStrings(int n) {
+        vector <vector <int>> dp(n+1,vector <int> (6,-1));
+        return solve(n,0,dp);
+    }
+};
