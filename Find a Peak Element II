@@ -1,0 +1,16 @@
+class Solution {
+public:
+    vector<int> findPeakGrid(vector<vector<int>>& mat) {
+        int maxx = 0,inx,iny;
+        for(int i = 0;i<mat.size();i++) {
+            for(int j = 0;j<mat[0].size();j++) {
+                if(maxx < mat[i][j]) {
+                    inx = i;
+                    iny = j;
+                    maxx = mat[i][j];
+                }
+            }
+        }
+        return {inx,iny};
+    }
+};
