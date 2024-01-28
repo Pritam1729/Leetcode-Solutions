@@ -1,0 +1,32 @@
+class Solution {
+public:
+    
+    int solve(vector <int> &nums,int index,int prev) {
+        map <long long,int> m;
+        int count = 0;
+        for(int i:nums) m[i]++;
+        if(m[1] > 0) {
+            count = m[1];
+            if(count%2 == 0) count--;
+        }
+        for(auto i:m) {
+            long long y = i.first;
+            int ans = 1;
+            while(y > 0) {
+                long long x = sqrt(y);
+                if(x<y && x*x == y && m[x] >= 2) {
+                    ans += 2;
+                    y = x;
+                }
+                else y = 0;
+            }
+            count = max(count,ans);
+        }
+        return count;
+    }
+    
+    int maximumLength(vector<int>& nums) {
+        sort(nums.begin(),nums.end());
+        return solve(nums,0,-1);
+    }
+};
