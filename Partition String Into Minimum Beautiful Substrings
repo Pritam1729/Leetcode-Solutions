@@ -1,0 +1,39 @@
+class Solution {
+public:
+    bool ispower(string s) {
+        int poww = 0,len = 0;
+        for(int i = s.length()-1;i>=0;i--) {
+            if(s[i] == '1') {
+                poww += pow(2,len);
+            }
+            len++;
+        }
+        if(poww == 0) return false;
+        int item = log2(poww) / log2(5);
+        if(pow(5,item) == poww) return true;
+        return false;
+    }
+
+    int solve(string s,int index,vector <int> &dp) {
+        if(index >= s.length()) return 0;
+        if(s[index] == '0') return 1e8;
+        if(dp[index] != -1) return dp[index];
+        int include = 1e8;
+        string str = "";
+        for(int i = index;i<s.length();i++) {
+            str = str + s[i];
+            if(ispower(str)) {
+                cout<<str<<endl;
+                include = min(include,1+solve(s,i+1,dp));
+            }
+        }
+        return dp[index] = include;
+    }
+
+    int minimumBeautifulSubstrings(string s) {
+        vector <int> dp(s.length()+1,-1);
+        int ans = solve(s,0,dp);
+        if(ans != 1e8) return ans;
+        return -1;
+    }
+};
