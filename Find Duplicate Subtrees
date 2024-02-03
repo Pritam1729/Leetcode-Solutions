@@ -1,0 +1,56 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    void solve(TreeNode *root,string &s) {
+        if(!root) return;
+        s += to_string(root->val);
+        if(root->left || (root->left == NULL && root->right)) {
+            s += '(';
+            solve(root->left,s);
+            s += ')';
+        }
+        if(root->right) {
+            s += '(';
+            solve(root->right,s);
+            s += ')';
+        }
+        return;
+    }
+
+    string tree2str(TreeNode* root) {
+        string s = "";
+        solve(root,s);
+        return s;
+    }
+
+    void solve(map <string,vector <TreeNode *>>& m,TreeNode *root) {
+        if(!root) return;
+        string s = tree2str(root->left);
+        if(s.length()) m[s].push_back(root->left);
+        s = tree2str(root->right);
+        if(s.length()) m[s].push_back(root->right);
+        solve(m,root->left);
+        solve(m,root->right);
+        return;
+    }
+
+    vector<TreeNode*> findDuplicateSubtrees(TreeNode* root) {
+        map <string,vector <TreeNode *>> m;
+        solve(m,root);
+        vector <TreeNode *> ans;
+        for(auto &i:m) {
+            if(i.second.size() > 1) ans.push_back(i.second[0]);
+        }
+        return ans;
+    }
+};
