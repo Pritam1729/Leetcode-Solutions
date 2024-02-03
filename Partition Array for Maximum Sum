@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int solve(vector <int> &arr,int index,int k,vector <int> &dp) {
+        if(index >= arr.size()) return 0;
+        if(dp[index] != -1) return dp[index];
+        int minn = -1;
+        int pre = -1;
+        for(int i = index;i<index+k && i < arr.size();i++) {
+            pre = max(pre,arr[i]);
+            minn = max(minn,pre*(i-index+1) + solve(arr,i+1,k,dp));
+        }
+        return dp[index] = minn;
+    }
+
+    int maxSumAfterPartitioning(vector<int>& arr, int k) {
+        vector <int> dp(arr.size()+1,-1);
+        return solve(arr,0,k,dp);
+    }
+};
