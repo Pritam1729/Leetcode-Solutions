@@ -1,0 +1,25 @@
+class Solution {
+public:
+    bool ok(string one,string two) {
+        int i = 0;int j = 0;
+        while(i<one.length() && j<two.length()) {
+            if(one[i] != two[i]) return false;
+            i++;
+            j++;
+        }
+        return true;
+    }
+    
+    int minimumTimeToInitialState(string word, int k) {
+        int count = 0;
+        int ans = 0;
+        int i = 0;
+        for(i = 0;i<=word.size()-k;i+=k) {
+            count++;
+            string temp = word.substr(i+k);
+            if(ok(temp,word)) return count;
+        }
+        if(i<word.length()) count++;
+        return count;
+    }
+};
