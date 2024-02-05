@@ -1,0 +1,38 @@
+class Solution {
+public:
+    int n = 0,m = 0;
+    int len = 0;
+    vector<int> rowh{1, 0, -1, 0};
+    vector<int> colh{0, 1, 0, -1};
+
+    int solve(vector<vector<char>>& board, vector <vector <int>> &vis,string word,int i,int j,int pos) {
+        if(pos >= len) return 1;
+        vis[i][j] = 1;
+        int minn = 0;
+        for(int h = 0;h<4;h++) {
+            int row = i + rowh[h];
+            int col = j + colh[h];
+            if(row >= 0 && col>=0 && row<n && col < m && !vis[row][col] && board[row][col] == word[pos]) {
+                minn = max(minn,solve(board,vis,word,row,col,pos+1));
+            }
+        }
+        vis[i][j] = 0;
+        return minn;
+    }
+
+    bool exist(vector<vector<char>>& board, string word) {
+        vector <vector <int>> vis(board.size(),vector <int> (board[0].size(),0));
+        n = board.size();
+        m = board[0].size();
+        int ans = 0;
+        len = word.length();
+        for(int  i = 0;i<n;i++) {
+            for(int j = 0;j<m;j++) {
+                if(board[i][j] == word[0]) {
+                    ans = max(solve(board,vis,word,i,j,1),ans);
+                }
+            }
+        }
+        return ans;
+    }
+};
