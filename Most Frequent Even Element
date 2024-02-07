@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int mostFrequentEven(vector<int>& nums) {
+        map<int,int> m;
+        int index = -1;
+        int count = 0;
+        for(auto i:nums) {
+            m[i]++;
+            if(i%2 == 0 && m[i] >= count) {
+                if(count == m[i] && index > i){
+                    index = i;
+                }
+                else if (count <m[i]){
+                    index = i;
+                    count = m[i];
+                }
+            }
+        }
+        return index;
+            
+
+    }
+};
