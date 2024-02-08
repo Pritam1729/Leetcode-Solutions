@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int solve(int n,int sum,vector <int> &dp) {
+        if(n == sum) return 0;
+        if(n<sum) return 100000;
+        if(dp[sum] != -1) return dp[sum];
+        int minn = INT_MAX;
+        for(int i = 1;i<=sqrt(n);i++) {
+            minn = min(minn,solve(n,sum + i*i,dp)+1);
+        }
+        dp[sum] = minn;
+        return minn;
+    }
+
+    int numSquares(int n) {
+        vector<int> dp(n+1,-1);
+        return solve(n,0,dp);
+    }
+};
