@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int countMatchingSubarrays(vector<int>& nums, vector<int>& pattern) {
+        int count = 0;
+        for(int i = 0;i<=nums.size()-pattern.size()-1;i++) {
+            int flag = 1;
+            for(int k = 0;k<pattern.size();k++) {
+                int item = 0;
+                if(nums[i + k + 1] > nums[i + k]) item = 1;
+                else if(nums[i + k + 1] == nums[i + k]) item = 0;
+                else if(nums[i + k + 1] < nums[i + k]) item = -1;
+                
+                if(item != pattern[k]) {
+                    flag = 0;
+                    break;
+                }
+             }
+            if(flag) count++;
+        }
+        return count;
+    }
+};
