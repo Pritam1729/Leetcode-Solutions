@@ -1,0 +1,13 @@
+class Solution {
+public:
+    int maxConsecutive(int bottom, int top, vector<int>& special) {
+        sort(special.begin(),special.end());
+        int maxx = 0;
+        for(int i =0;i<special.size();i++) {
+            maxx = max(maxx,special[i]-bottom);
+            bottom = special[i]+1;
+        }
+        maxx = max(top-bottom+1,maxx);
+        return maxx;
+    }
+};
