@@ -1,0 +1,45 @@
+class Solution {
+public:
+    string decodeString(string s) {
+        stack <int> temp;
+        stack <string> ch;
+        int i = 0;
+        string ans = "";
+        for(int i = 0;i<s.length();i++) {
+            string num = "";
+            while(i<s.length() && s[i]>='0' && s[i]<='9') {
+                num+=s[i++];
+            }
+            if(num != "") {
+                temp.push(stoi(num));
+                i--;
+            }
+            else{
+                if(s[i] == ']') {
+                    string str = "";
+                    while(ch.top() != "[") {
+                        str =  ch.top() + str;
+                        ch.pop();
+                    }
+                    ch.pop();
+                    int n = temp.top();
+                    // reverse(str.begin(),str.end());
+                    temp.pop();
+                    string tem = "";
+                    for(int j = 0;j<n;j++) {
+                        tem += str;
+                    }
+                    ch.push(tem);
+                }
+                else {
+                    ch.push(string(1, s[i]));
+                }
+            }
+        }
+        while(!ch.empty()) {
+            ans = ch.top() + ans;
+            ch.pop();
+        }
+        return ans;
+    }
+};
