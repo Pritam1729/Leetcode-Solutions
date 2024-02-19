@@ -1,14 +1,10 @@
 class Solution {
 public:
-    bool powerr(int n,int i){
-        if(i > 31) return false;
-        if((1<<i) > n) return false;
-        else if(1<<i == n) return true;
-        else return powerr(n,++i);
-    }
-
     bool isPowerOfTwo(int n) {
-        int i = 0;
-        return powerr(n,i);
+        if(n<=0)    
+            return false;
+        int temp = n&(n-1);
+        if(!temp) return true;
+        return false; 
     }
 };
