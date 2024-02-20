@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int countPrefixSuffixPairs(vector<string>& s) {
+        int count = 0;
+        for(int i = 0;i<s.size();i++) {
+            for(int j = i+1;j<s.size();j++) {
+                if(s[i].length() <= s[j].length()) {
+                    int flag = 1;
+                    for(int k = 0;k<s[i].length();k++) {
+                        if(s[i][k] != s[j][k]) {
+                            flag = 0;
+                            break;
+                        }
+                    }
+                    if(flag) {
+                        int ok = s[j].length()-1;
+                        for(int k = s[i].length()-1;k>=0;k--) {
+                            if(s[i][k] != s[j][ok]) {
+                                flag = 0;
+                                break;
+                            }
+                            ok--;
+                        }
+                    }
+                    if(flag) count++;
+                }
+            }
+        }
+        return count;
+    }
+};
