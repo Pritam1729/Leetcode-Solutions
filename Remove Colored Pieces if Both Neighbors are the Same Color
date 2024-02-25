@@ -1,0 +1,13 @@
+class Solution {
+public:
+    bool winnerOfGame(string s) {
+        int a = 0,b = 0;
+        if(s.length() <= 2) return false;
+        for(int i = 1;i<s.length()-1;i++) {
+            if(s[i] == 'A' && s[i-1] == s[i+1] && s[i] == s[i+1]) a++;
+            else if(s[i] == 'B' && s[i-1] == s[i+1] && s[i] == s[i+1]) b++;
+        }
+        if(a>b) return true;
+        return false;
+    }
+};
