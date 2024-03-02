@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int minOperations(vector<int>& nums, int k) {
+        priority_queue<long long, vector<long long>, greater<long long>> q;
+        for(int i = 0; i < nums.size(); i++) {
+            q.push(nums[i]);
+        }
+        int count = 0;
+        while(q.size() >= 2 && q.top() < k) {
+            long long one = q.top();
+            q.pop();
+            long long two = q.top();
+            q.pop();
+            long long sum = min(one,two)*2 + max(one,two);
+            q.push(sum);
+            // cout<<one<<" "<<two<<endl;
+                
+            count++;
+        }
+        return count;
+    }
+};
