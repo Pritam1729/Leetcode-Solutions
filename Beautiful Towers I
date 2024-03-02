@@ -1,0 +1,43 @@
+class Solution {
+public:
+    long long maximumSumOfHeights(vector<int>& maxHeights) {
+        int maxx = *max_element(maxHeights.begin(),maxHeights.end());
+        int index = 0;
+        int n = maxHeights.size();\
+        stack <int> s;
+        for(int i = 0;i<n;i++) {
+            s.push(i);
+        }
+        long long ans = 0;
+        while(!s.empty()) {
+            long long sum = maxHeights[s.top()];
+            int prev = sum;
+            int i = s.top()-1;
+            while(i>=0) {
+                if(maxHeights[i] <= prev) {
+                    sum += maxHeights[i];
+                    prev = maxHeights[i];
+                }
+                else {
+                    sum += prev;
+                }
+                i--;
+            }
+            i = s.top() + 1;
+            prev = maxHeights[s.top()];
+            while(i<n) {
+                if(maxHeights[i] <= prev) {
+                    prev  = maxHeights[i];
+                    sum += maxHeights[i];
+                }
+                else {
+                    sum += prev;
+                }
+                i++;
+            }
+            ans = max(ans,sum);\
+            s.pop();
+        }
+        return ans;
+    }
+};
