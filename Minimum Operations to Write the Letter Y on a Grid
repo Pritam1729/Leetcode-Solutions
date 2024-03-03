@@ -1,0 +1,45 @@
+class Solution {
+public:
+    int co(vector <vector <int>> & grid,int num,vector <vector <int>> &dist) {
+        int count = 0;
+        for(int i = 0;i<grid.size();i++) {
+            for(int j = 0;j<grid[0].size();j++) {
+                // cout<<dist[i][j]<<" ";
+                if(dist[i][j] == 0 && grid[i][j] != num) count++;
+            }
+            // cout<<endl;
+        }
+        return count;
+    }
+    
+    int op(vector <vector <int>> &grid,int num) {
+        int count = 0;
+        vector <vector <int>> dist(grid.size(),vector <int> (grid[0].size(),0));
+        int mid = (grid.size()/2);
+        cout<<mid<<endl;
+        int i = 0,j=0;
+        while(i<=mid && j<=mid) {
+            dist[i][j] = 1;
+            if(grid[i++][j++] != num) count++;
+        }
+        i = 0,j = grid[0].size()-1;
+        while(i < mid && j > mid) {
+            dist[i][j] = 1;
+            if(grid[i++][j--] != num) count++;
+        }
+        i = mid+1,j = mid;
+        while(i < grid.size()) {
+            dist[i][mid] = 1;
+            if(grid[i++][mid] != num) count++;
+        }
+        int minn = INT_MAX;
+        for(int i = 0;i<=2;i++) {
+            if(i != num) minn = min(co(grid,i,dist),minn);
+        }
+        return count + minn;
+    }
+    
+    int minimumOperationsToWriteY(vector<vector<int>>& grid) {
+        return min(op(grid,0),min(op(grid,1),op(grid,2)));
+    }
+};
