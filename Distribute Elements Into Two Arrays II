@@ -1,0 +1,39 @@
+class Solution {
+public:
+    int greater(vector <int> &arr,int num) {
+        return arr.end() - upper_bound(arr.begin(),arr.end(),num);
+    }
+
+    vector<int> resultArray(vector<int>& nums) {
+        vector <int> arr1,arr2,a1,a2;
+        arr1.push_back(nums[0]);
+        arr2.push_back(nums[1]);
+        a1.push_back(nums[0]);
+        a2.push_back(nums[1]);
+        for(int i = 2;i<nums.size();i++) {
+            int one = greater(arr1,nums[i]);
+            int two = greater(arr2,nums[i]);
+            if(one > two) {
+                a1.push_back(nums[i]);
+                arr1.insert(arr1.end() - one,nums[i]);
+            }
+            else if(one < two) {
+                a2.push_back(nums[i]);
+                arr2.insert(arr2.end() - two,nums[i]);
+            }
+            else{
+                if(a1.size() > a2.size()) {
+                    a2.push_back(nums[i]);
+                    arr2.insert(arr2.end() - two,nums[i]);
+                }
+                else {
+                    a1.push_back(nums[i]);
+                    arr1.insert(arr1.end() - one,nums[i]);
+                }
+            }
+        }
+        for(auto i: a2) a1.push_back(i);
+        return a1;
+        
+    }
+};
