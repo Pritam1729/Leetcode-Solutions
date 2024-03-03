@@ -1,0 +1,49 @@
+class Solution {
+public:
+    int countSubmatrices(vector<vector<int>>& grid, int k) {
+        int count = 0;
+        int sum = 0;
+        int i,row = -1;
+        vector <vector <int>> dist(grid.size(),vector <int> (grid[0].size(),0));
+        for(i = 0;i<grid[0].size();i++) {
+            sum = sum + grid[0][i];
+            if(sum <= k) {
+                count++;
+                row = i;
+            }
+            else break;
+        }
+        int col = -1;
+        sum = grid[0][0];
+        for(int i = 1;i<grid.size();i++) {
+            sum = sum + grid[i][0];
+            if(sum <= k) {
+                count++;
+                col = i;
+            }
+            else break;
+        }
+        if(row == -1 && col == -1) return 0;
+        sum = grid[0][0];
+        for(int i = 0;i<=col;i++) {
+            int s = 0;
+            for(int j = 0;j<=row;j++) {
+                s += grid[i][j];
+                dist[i][j] = s;
+            }
+        }
+        for(int i = 1;i<=col;i++) {
+            for(int j = 1;j<=row;j++) {
+                if(j == 0) {
+                    dist[i][j] += dist[i-1][j];
+                }
+                else{
+                    dist[i][j] += dist[i-1][j];
+                    if(dist[i][j] <= k) count++;
+                    else break;
+                }
+            }
+        }
+        return count;
+    }
+};
