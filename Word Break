@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int solve(string &s,vector <string> &wordDict,int i,vector <int> &dp) {
+        if(i == s.length()-1) return 1;
+        if(dp[i+1] != -1) return dp[i+1];
+        int minn = 0;
+        for(int j = 0;j<wordDict.size();j++) {
+            if(i + wordDict[j].length() < s.length() && s.substr(i+1,wordDict[j].length()) == wordDict[j]) {
+                minn = max(minn,solve(s,wordDict,i+wordDict[j].length(),dp));
+            }
+        }
+        return dp[i+1] = minn;
+    }
+
+    bool wordBreak(string s, vector<string>& wordDict) {
+        vector <int> dp(s.length()+2,-1);
+        int ans = solve(s,wordDict,-1,dp);
+        return ans;
+    }
+};
