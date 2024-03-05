@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int findPairs(vector<int>& nums, int k) {
+        map <int,int> m;
+    
+        int count = 0;
+        for(auto i:nums) {
+            if(m[i] == 1) {
+                if(k == 0) {
+                    m[i]++;
+                    count++;
+                }
+                continue;
+            }
+            if(m[i + k]==1)     
+                count++;
+            if(m[i-k] == 1)
+                count++;
+            m[i]++;
+        }
+        return count;
+    }
+};
