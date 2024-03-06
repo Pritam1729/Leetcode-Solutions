@@ -1,0 +1,17 @@
+class Solution {
+public:
+    bool checkIfExist(vector<int>& arr) {
+        map <int,int> m;
+        for(int i = 0;i<arr.size();i++) m[arr[i]]++;
+        for(int i = 0;i<arr.size();i++) {
+            if(arr[i] == 0) {
+                if(m[arr[i]]>1) return true;
+            }
+            else if(m[2*arr[i]] != 0) {
+                // cout<<arr[i]<<endl;
+                return true;
+            }
+        }
+        return false;
+    }
+};
