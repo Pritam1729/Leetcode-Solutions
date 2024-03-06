@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int numSplits(string s) {
+        vector <int> hash1(27,0);
+        vector <int> hash2(27,0);
+        int count1= 0,count2 = 0;
+        for(int i = 0;i<s.length();i++) {
+            if(hash2[s[i]-'a'] == 0) {
+                count2++;
+            }
+            hash2[s[i]-'a']++;
+        }
+        int ans = 0;
+        for(int i = 0;i<s.length()-1;i++) {
+            hash1[s[i]-'a']++;
+            hash2[s[i]-'a']--;
+            if(hash1[s[i]-'a'] == 1) count1++;
+            if(hash2[s[i]-'a'] == 0) count2--;
+            if(count1 == count2) ans++;
+        }
+        return ans;
+    }
+};
