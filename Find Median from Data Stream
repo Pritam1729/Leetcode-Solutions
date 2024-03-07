@@ -1,0 +1,35 @@
+class MedianFinder {
+public:
+    int len;
+    vector <double> mid;
+    MedianFinder() {
+        len = 0;
+        std::ios_base::sync_with_stdio(false);
+        std::cin.tie(NULL);
+        std::cout.tie(NULL);
+    }
+    
+    void addNum(int num) {
+        len++;
+        auto pos = upper_bound(mid.begin(),mid.end(),num) - mid.begin();
+        mid.insert(mid.begin() + pos,num);
+    }
+    
+    double findMedian() {
+        // return len;
+        if(len == 0) return 0;
+        if(len == 1) return (double)mid[0];
+        int ch = len/2;
+        if(len%2 == 0) {
+            return ((double)mid[ch-1] + (double)mid[ch])/2;
+        }
+        return (double)mid[ch];
+    }
+};
+
+/**
+ * Your MedianFinder object will be instantiated and called as such:
+ * MedianFinder* obj = new MedianFinder();
+ * obj->addNum(num);
+ * double param_2 = obj->findMedian();
+ */
