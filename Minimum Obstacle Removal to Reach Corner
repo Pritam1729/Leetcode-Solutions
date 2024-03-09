@@ -1,0 +1,43 @@
+class Solution {
+public:
+    int minimumObstacles(vector<vector<int>>& grid) {
+        vector<vector<int>> dist(grid.size(), vector<int>(grid[0].size(), INT_MAX)); 
+        priority_queue<pair<int, pair<int, int>>, vector<pair<int, pair<int, int>>>, greater<pair<int, pair<int, int>>>> q; 
+
+        if(grid[0][0] == 1) {
+            q.push({1,{0,0}});
+            dist[0][0] = 1; 
+        }
+        else {
+            q.push({0,{0,0}});
+            dist[0][0] = 0; 
+        }
+        int xh[] = {1,0,-1,0};
+        int yh[] = {0,1,0,-1};
+        while(!q.empty()) {
+            int dis = q.top().first;
+            int x = q.top().second.first;
+            int y = q.top().second.second;
+            q.pop();
+            for(int i = 0;i<4;i++) {
+                int xt = xh[i] + x;
+                int yt = yh[i] + y;
+                if(xt >= 0 && yt >= 0 && xt < grid.size() && yt < grid[0].size()) {
+                    if(grid[xt][yt] == 1) {
+                        if(dist[xt][yt] > dis + 1) {
+                            q.push({dis+1,{xt,yt}});
+                            dist[xt][yt] = dis + 1; 
+                        }
+                    }
+                    else{
+                        if(dist[xt][yt] > dis) {
+                            q.push({dis,{xt,yt}});
+                            dist[xt][yt] = dis; 
+                        }
+                    }
+                }
+            }
+        }
+        return dist[grid.size()-1][grid[0].size()-1]; 
+    }
+};
