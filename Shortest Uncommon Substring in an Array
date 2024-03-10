@@ -1,0 +1,58 @@
+class Solution {
+public:
+    string ok(string s,map <string,int> &m) {
+        string ans = "zzzzzzzzzzzzzzzzzzzzzz";
+        map <string,int> m2;
+        for (int len = 1; len <= s.length(); len++) {    
+                for (int i = 0; i <= s.length() - len; i++) {
+              
+                    int j = i + len - 1;   
+                    string ok = "";
+                    for (int k = i; k <= j; k++) 
+                        ok += s[k];
+                    
+                    m2[ok]++;
+                }
+        }
+        for (int len = 1; len <= s.length(); len++) {    
+                for (int i = 0; i <= s.length() - len; i++) {
+              
+                    int j = i + len - 1;   
+                    string ok = "";
+                    for (int k = i; k <= j; k++) 
+                        ok += s[k];
+                    
+                    if(m[ok]-m2[ok] == 0) {
+                        if(ans.length() > ok.length()) ans = ok;
+                        else if(ans.length() == ok.length()) {
+                            if(ans > ok) ans = ok;
+                        }
+                    }
+                }
+        }
+        if(ans == "zzzzzzzzzzzzzzzzzzzzzz") return "";
+        return ans;
+    }
+    
+    vector<string> shortestSubstrings(vector<string>& arr) {
+        map <string,int> m;
+        for(auto s:arr) {
+            for (int len = 1; len <= s.length(); len++) {    
+                for (int i = 0; i <= s.length() - len; i++) {
+              
+                    int j = i + len - 1;   
+                    string ans = "";
+                    for (int k = i; k <= j; k++) 
+                        ans += s[k];
+                    // cout<<ans<<endl;
+                    m[ans]++;
+                }
+            }
+        }
+        vector <string> ans;
+        for(auto i:arr) {
+            ans.push_back(ok(i,m));
+        }
+        return ans;
+    }
+};
