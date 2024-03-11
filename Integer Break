@@ -1,0 +1,18 @@
+class Solution {
+public:
+    int solve(int n,int sum,vector <int>&dp) {
+        if(n == sum) return 1;
+        if(n < sum) return 0;
+        if(dp[sum] != -1) return dp[sum];
+        int minn = 0;
+        for(int i = 1;i<n;i++) {
+            minn = max(minn,i*solve(n,sum+i,dp));
+        }
+        return dp[sum] = minn;
+    }
+
+    int integerBreak(int n) {
+        vector <int> dp(n+1,-1);
+        return solve(n,0,dp);
+    }
+};
