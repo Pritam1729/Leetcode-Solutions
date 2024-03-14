@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int solve(vector<vector<int>>& books, int k,int height,int weight,int index,vector <vector <int>> &dp) {
+        if(index >= books.size()) return height;
+        // if(weight > k) return 1000000000;
+
+        if(dp[index][weight] != -1) return dp[index][weight];
+        int include = 0;
+        include = solve(books,k,books[index][1],books[index][0],index+1,dp) + height;
+        int exclude = 1000000000;
+        if(weight + books[index][0] <= k)
+            exclude = solve(books,k,max(height,books[index][1]),weight + books[index][0],index+1,dp);
+        return dp[index][weight] = min(include,exclude);
+
+    }
+
+    int minHeightShelves(vector<vector<int>>& books, int shelfWidth) {
+        // sort(books.begin(),books.end());
+        vector <vector <int>> dp(books.size()+1,vector <int>(shelfWidth+1,-1));
+        return solve(books,shelfWidth,0,0,0,dp);
+    }
+};
