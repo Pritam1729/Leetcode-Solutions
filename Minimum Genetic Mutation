@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int minMutation(string startGene, string endGene, vector<string>& bank) {
+        queue <pair <string,int>> q;
+        q.push({startGene,0});
+        unordered_map <string,int> m;
+        for(auto i:bank) m[i] = 1;
+        if(m[endGene] == 0) return -1;
+        vector <char> choice = {'A','C','G','T'};
+        while(!q.empty()) {
+            string gene = q.front().first;
+            int level = q.front().second;
+            q.pop();
+            for(int i = 0;i<gene.length();i++) {
+                for(int j = 0;j<4;j++) {
+                    string temp = gene;
+                    temp[i] = choice[j];
+                    if(temp == endGene) return level+1;
+                    if(m.find(temp) != m.end()) {
+                        m.erase(temp);
+                        q.push({temp,level+1});
+                    }
+                }
+            } 
+        }
+        return -1;
+    }
+};
