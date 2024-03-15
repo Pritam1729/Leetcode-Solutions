@@ -1,0 +1,41 @@
+bool compareByLength(const std::string& a, const std::string& b) {
+    return a.length() < b.length();
+}
+
+class Solution {
+public:
+    bool ok(string &one,string &two) {
+        if(two.length() - one.length() != 1) return false;
+        int count = 0;
+        int i = 0,j=0;
+        while(i<one.length() && j<two.length()) {
+            if(one[i] != two[j]) {
+                j++;
+                count++;
+            }
+            else{
+                i++;
+                j++;
+            }
+        }
+        if(count == 1 || count == 0) return true;
+        return false;
+    }
+
+    int solve(vector <string> &words,int prev,int index,vector <vector <int>> &dp) {
+        if(index >= words.size()) return 0;
+        if(dp[index][prev+1] != -1) return dp[index][prev+1];
+        int include = 0;
+        if(prev == -1 || ok(words[prev],words[index])) {
+            include = 1 + solve(words,index,index+1,dp);
+        }
+        int exclude = solve(words,prev,index+1,dp);
+        return dp[index][prev+1] = max(include,exclude);
+    }
+
+    int longestStrChain(vector<string>& words) {
+        sort(words.begin(),words.end(),compareByLength);
+        vector <vector <int>> dp(words.size()+1,vector <int> (words.size()+1,-1));
+        return solve(words,-1,0,dp);
+    }
+};
