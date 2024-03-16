@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int sumOfEncryptedInt(vector<int>& nums) {
+        // int len = nums.size();
+        int sum = 0;
+        // int maxx = 0;
+        for(int i = 0;i<nums.size();i++) {
+            int num = nums[i];
+            int len = 0;
+            int maxx = 0;
+            while(num) {
+                len++;
+                maxx = max(maxx,num%10);
+                num = num/10;
+            }
+            string s = "";
+            for(int i = 0;i<len;i++) s+=to_string(maxx);
+            sum += stoi(s);
+        }
+        return sum;
+    }
+};
