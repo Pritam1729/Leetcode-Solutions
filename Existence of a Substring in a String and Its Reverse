@@ -1,0 +1,16 @@
+class Solution {
+public:
+    bool isSubstringPresent(string s) {
+        map <string,int> m;
+        for(int i = 0;i<s.length()-1;i++)  {
+            string str = s.substr(i,2);
+            m[str]++;
+        }
+        reverse(s.begin(),s.end());
+        for(int i = 0;i<s.length()-1;i++)  {
+            string str = s.substr(i,2);
+            if(m[str] != 0) return true;
+        }
+        return false;
+    }
+};
