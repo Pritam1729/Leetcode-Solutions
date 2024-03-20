@@ -1,0 +1,58 @@
+class Solution {
+public:
+    long long nodenumber = 0;
+    vector <long  long> ans;
+    long long maxx = 0;
+
+    int number(vector <vector <long long>>& adj,int node) {
+        if(adj[node].size() == 0) {
+            maxx = max(maxx,nodenumber-1);
+            ans.push_back(nodenumber - 1);
+            return 1;
+        }
+        long long left = 0;
+        long long right = 0;
+        if(adj[node].size() == 2) {
+            left = number(adj,adj[node][0]);
+            right = number(adj,adj[node][1]);
+
+            if(node!=0) {
+                maxx = max(maxx,left*right*(nodenumber-left-right-1));
+                ans.push_back(left*right*(nodenumber-left-right-1));
+            }
+            else {
+                maxx = max(maxx,left*right);
+                ans.push_back(left*right);
+            }
+
+            return left + right + 1;
+        }
+        else{
+            left = number(adj,adj[node][0]);
+            if(node!=0) {
+                maxx = max(maxx,left * (nodenumber-left-1));
+                ans.push_back(left * (nodenumber-left-1));
+            }
+            else {
+                maxx = max(maxx,left);
+                ans.push_back(left);
+            }
+
+            return left + 1;
+        }
+    }
+
+    int countHighestScoreNodes(vector<int>& parents) {
+        nodenumber = parents.size();
+        vector <vector <long long>> adj(parents.size());
+        for(int i = 1;i<nodenumber;i++) {
+            adj[parents[i]].push_back(i);
+        }
+        number(adj,0);
+        sort(ans.rbegin(),ans.rend());
+        int count = 0;
+        for(int i = 0;i<ans.size();i++) if(maxx == ans[i]) count++;
+        return count;
+
+    }
+};
