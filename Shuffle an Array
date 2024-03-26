@@ -1,0 +1,27 @@
+class Solution {
+public:
+    vector <int> original;
+    vector <int> shu;
+
+    Solution(vector<int>& nums) {
+        shu = nums;
+        original = nums;
+    }
+    
+    vector<int> reset() {
+        shu = original;
+        return original;
+    }
+    
+    vector<int> shuffle() {
+        random_shuffle(shu.begin(),shu.end());
+        return shu;
+    }
+};
+
+/**
+ * Your Solution object will be instantiated and called as such:
+ * Solution* obj = new Solution(nums);
+ * vector<int> param_1 = obj->reset();
+ * vector<int> param_2 = obj->shuffle();
+ */
