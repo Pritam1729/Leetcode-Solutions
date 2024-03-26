@@ -1,0 +1,29 @@
+class Solution {
+public:
+
+    bool isok(string &s,int i,int j) {
+        string temp = "";
+        temp += s[i];
+        temp += s[j];
+        if(stoi(temp)<=26) return true;
+        return false;
+    }
+    
+    int solve(string &s,int index,vector <int> &dp) {
+        if(index >= s.length()) return 1;
+        if(s[index] == '0') return 0;
+        if(dp[index] != -1) return dp[index];
+        int minn = 0;
+        minn += solve(s,index+1,dp);
+        if(index + 1 < s.length() && isok(s,index,index+1)){
+            minn += solve(s,index+2,dp);
+        }
+        return dp[index] = minn;
+    }
+
+
+    int numDecodings(string &s) {
+        vector <int> dp(s.length(),-1);
+        return solve(s,0,dp);
+    }
+};
