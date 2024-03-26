@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int maximumLengthSubstring(string s) {
+        int maxx =0;
+        int i,j;
+        // int maxx = 0;
+        for(i = 0;i<s.length()-1;i++) {
+            vector <int> m(26,0);
+            int len = 0;
+            for(j = i;j<s.length();j++) {
+                if(m[s[j]-'a'] < 2) {
+                    m[s[j]-'a']++;
+                    len++;
+                }
+                else break;
+            }
+            maxx = max(maxx,len);
+        } 
+        return maxx;       
+   }
+};
