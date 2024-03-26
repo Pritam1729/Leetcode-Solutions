@@ -1,0 +1,15 @@
+class Solution {
+public:
+    int minOperations(int k) {
+        if(k == 1 || k == 0) return 0;
+        int minn = INT_MAX;
+        for(int i = 1;i<=ceil((double)k/2);i++) {
+            int step = i-1;
+            int temp = k - i;
+            step += ceil((double)(temp)/i);
+            
+            minn = min(minn,step);
+        }
+        return minn;
+    }
+};
