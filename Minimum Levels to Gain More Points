@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int minimumLevels(vector<int>& possible) {
+        int minn = INT_MAX;
+        int sum = 0;
+        for(auto i:possible) {
+            if(i == 0) sum--;
+            else sum++;
+        }
+        int pre = 0;
+        for(int i =0;i<possible.size()-1;i++) {
+            if(possible[i] == 0) pre--;
+            else pre++;
+
+            if(pre > sum - pre) {
+                return i+1;
+            }
+        }
+        return -1;
+    }
+};
