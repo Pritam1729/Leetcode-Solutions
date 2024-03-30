@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int maxScore(vector<int>& num, int k) {
+        int totsum = 0,sum = 0;
+        int ans = 0;
+        for(int i = 0;i<num.size();i++) {
+            if(i<num.size()-k) sum+=num[i];
+            totsum += num[i];
+        }
+        int i = 0,j=num.size()-k;
+        ans = max(ans,totsum - sum);
+        while(j<num.size()) {
+            sum-=num[i];
+            sum+=num[j];
+            cout<<sum<<" "<<totsum<<endl;
+            i++;
+            j++;
+            ans = max(ans,totsum - sum);
+        }
+        return ans;
+    }
+};
