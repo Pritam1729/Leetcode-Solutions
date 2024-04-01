@@ -1,0 +1,26 @@
+class Solution {
+public:
+    vector <string> ans;
+
+    void solve(string s,vector <string>& word,int i,string st) {
+        if(i == s.length()-1) {
+            ans.push_back(st);
+            return;
+        }
+        for(int j = 0;j<word.size();j++) {
+            if(i + word[j].length() < s.length() && s.substr(i+1,word[j].length()) == word[j]) {
+                string str = st + word[j];
+                if(i + word[j].length() != s.length()-1) str += " ";
+                solve(s,word,i+word[j].length(),str);
+            }
+        }
+        return;
+    }
+
+    vector<string> wordBreak(string s, vector<string>& wordDict) {
+        solve(s,wordDict,-1,"");
+        // sort(ans.rbegin(),ans.rend());
+        // reverse(ans.begin(),ans.end());
+        return ans;
+    }
+};
