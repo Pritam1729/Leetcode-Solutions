@@ -1,0 +1,30 @@
+class Solution {
+public:
+    bool take(int prev,int pre) {
+        if(prev == -1 && pre == 0) return true;
+        if(prev == 0 && (pre == 0 || pre == 1)) return true;
+        if(prev == 1 && (pre == 1 || pre == 2)) return true;
+        if(prev == 2 && pre == 2) return true;
+        return false;
+    }
+
+    int mod = 1000000007;
+
+    long long solve(vector <int> &nums,int index,int prev,vector <vector <int>> &dp) {
+        if(index >= nums.size()) return prev == 2;
+        if(dp[index][prev+1] != -1) return dp[index][prev+1];
+        long long minn = 0;
+        if(take(prev,nums[index])) {
+            minn += solve(nums,index+1,nums[index],dp)%mod;
+            minn += solve(nums,index+1,prev,dp)%mod;
+            return dp[index][prev+1] = minn%mod;
+        }
+        return dp[index][prev+1] = solve(nums,index+1,prev,dp)%mod;
+
+    }
+
+    int countSpecialSubsequences(vector<int>& nums) {
+        vector <vector <int>> dp(nums.size()+1,vector <int> (4,-1));
+        return solve(nums,0,-1,dp)%mod;
+    }
+};
