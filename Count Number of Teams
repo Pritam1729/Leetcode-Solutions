@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int solve(vector<int>& rating,int index,int prev,int len,vector <vector <vector <int>>> &dp) {
+        if(len == 3) return 1;
+        if(index >= rating.size()) return 0;
+        if(dp[index][prev+1][len] != -1) return dp[index][prev+1][len];
+        if(prev == -1 || rating[prev] < rating[index]) {
+            int minn = 0;
+            minn += solve(rating,index+1,index,len+1,dp);
+            minn += solve(rating,index+1,prev,len,dp);
+            return dp[index][prev+1][len] = minn;
+        } 
+        return dp[index][prev+1][len] = solve(rating,index+1,prev,len,dp);
+    }
+
+    int numTeams(vector<int>& rating) {
+        vector <vector <vector <int>>> dp(rating.size()+1,vector <vector <int>> (rating.size()+1,vector <int> (4,-1)));
+        int minn = solve(rating,0,-1,0,dp);
+        reverse(rating.begin(),rating.end());
+        for (int i = 0; i < dp.size(); ++i) {
+            for (int j = 0; j < dp[i].size(); ++j) {
+                fill(dp[i][j].begin(), dp[i][j].end(), -1);
+            }
+        }
+        minn+=solve(rating,0,-1,0,dp);
+        return minn;
+    }
+};
