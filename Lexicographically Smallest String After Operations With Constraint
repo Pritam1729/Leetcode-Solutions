@@ -1,0 +1,41 @@
+class Solution {
+public:
+    pair<char, int> mindist(char cth, int k) {
+        vector <int> ans(26,INT_MAX);
+        if(cth == 'a' || k == 0) return {cth,0};
+        char c = cth - 'a';
+        int i = 1;
+        while(i<=k) {
+            char temp = 'a' + (c + i)%26;
+            if(ans[temp - 'a'] > i) ans[temp - 'a'] = i;
+            i++;
+        }
+        i = 1;
+        while(i<=k) {
+            char temp = 'a' + (c - i)%26;
+            if(temp == 'a') {
+                if(ans[temp-'a'] > i) ans[temp - 'a'] = i;
+                break;
+            }
+            else if(ans[temp-'a'] > i) ans[temp - 'a'] = i;
+            i++;
+        }
+        for(int i = 0;i<26;i++) {
+            if(ans[i] != INT_MAX) {
+                return {'a' + i,ans[i] };
+            }
+        }
+        return {cth,0};
+    }
+
+    string getSmallestString(string s, int k) {
+        string sth = "";
+        for(int i = 0;i<s.length();i++) {
+            pair <char,int> temp = mindist(s[i],k);
+            cout<<temp.second<<endl;
+            sth+=temp.first;
+            k -= temp.second;
+        }
+        return sth;
+    }
+};
