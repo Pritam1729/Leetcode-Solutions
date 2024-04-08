@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int countStudents(vector<int>& students, vector<int>& sandwiches) {
+        queue <int> q;
+        for(auto i:students) q.push(i);
+        int j = 0;
+        while(j<sandwiches.size()) {
+            if(sandwiches[j] == q.front()) {
+                q.pop();
+                j++;
+            }
+            else{
+                int len = q.size();
+                int i = 0;
+                while(i<len && q.front() != sandwiches[j]) {
+                    int node = q.front();
+                    q.pop();
+                    q.push(node);
+                    i++;
+                }
+                if(i == len) return len;
+                else {
+                    q.pop();
+                    j++;
+                }
+            }
+        }
+        return 0;
+    }
+};
