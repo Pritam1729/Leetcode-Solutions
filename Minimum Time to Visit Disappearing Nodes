@@ -1,0 +1,37 @@
+class Solution {
+public:
+    vector<int> minimumTime(int n, vector<vector<int>>& edges, vector<int>& disappear) {
+        vector<vector<vector<int>>> adjList(n);
+        for(auto it : edges){
+            adjList[it[0]].push_back({it[1], it[2]});
+            adjList[it[1]].push_back({it[0], it[2]});
+        }
+        vector<int> ans(n, 1e9);
+        ans[0] = 0;
+        
+        set<vector<int>> st;
+        st.insert({0, 0});
+        
+        while(st.size()){
+            auto curr = *st.begin();
+            st.erase(st.begin());
+            int currDist = curr[0];
+            for(auto it : adjList[curr[1]]){
+                int adjNode = it[0];
+                int dist = currDist + it[1];
+                if(dist < disappear[adjNode] && dist < ans[adjNode]){
+                    if(ans[adjNode] != 1e9){
+                        st.erase(st.find({ans[adjNode], adjNode}));
+                    }
+                    ans[adjNode] = dist;
+                    st.insert({dist, adjNode});
+                }
+            }
+        }
+        
+        for(int i = 0; i < n; i++){
+            if(ans[i] == 1e9) ans[i] = -1;
+        }
+        return ans;
+    }
+};
