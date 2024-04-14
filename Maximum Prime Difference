@@ -1,0 +1,25 @@
+class Solution {
+public:
+
+    bool isprime(int n) {
+        if(n == 1 || n == 0) return false;
+        for(int i = 2;i*i<=n;i++) {
+            if(n%i == 0) return false;
+        }
+        return true;
+    }
+
+    int maximumPrimeDifference(vector<int>& nums) {
+        int start = 0;
+        while(start < nums.size()) {
+            if(isprime(nums[start])) break;
+            start++;
+        }
+        int end = nums.size()-1;
+        while(end >= 0) {
+            if(isprime(nums[end])) break;
+            end--;
+        }
+        return end - start;
+    }
+};
